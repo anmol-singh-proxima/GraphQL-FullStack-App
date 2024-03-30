@@ -1,0 +1,125 @@
+FrontEnd: Vuejs, vue-lds
+Server: Nodejs, Expressjs, Apollo-Server
+Middleware: Sequelize
+Database: Postgresql
+
+
+
+
+
+Key Components of App:
+- Login & Signup Pages
+- Home Page
+	- User can assign himself to a project
+	- Will see the project tasks
+- Graphql Queries & Mutations
+- Database Models using Sequelize
+
+
+
+Data:
+- Users table
+- UserType table
+- Project table
+
+
+
+Schema Structure:
+
+
+
+
+
+
+
+
+
+Note:
+For graphql - take code(types) first approach, not Schema First Approach
+
+Kinds of User:
+- Project Manager
+- Project Lead
+- Designer
+- Frontend Engineer
+- Backend Engineer
+- Tester
+
+Number of members per Project:
+- Project Manager - 1 fix
+- Project Lead - 1 fix
+- Designer: min-1, max-2
+- Frontend Engineer: min-1, max-2
+- Backend Engineer: min-2, max-4
+- Tester: min-1, max-2
+
+Project Manager must handle atleast 2 projects
+Project Lead must handle only 1 project
+
+User can:
+- Signup/Login to the App
+- View his/her Profile
+- View list of Projects he/she is assigned to
+- View list of Tasks given to him in a Project
+- View/Edit Status of each Task
+
+Roles of each User:
+- Project Manager
+	- Can create a Project
+	- Can close a Project once its completed
+	- Can assign/remove Project Lead to/from a Project
+- Project Lead
+	- Can assign/remove Frontend-Developer/s, Backend-Developer/s & Tester/s to his/her Project
+	- Can assign/remove Tasks to each member of the Project
+	- Can request to Project Manager to add/remove him/her to/from a Project
+- Other Users
+	- Can request to add/remove him/her from any Project
+	- Can request to assign any Task to him/her in a Project
+	- Can request to remove any Task assigned to him/her
+	- User have to raise requests to Project Lead
+
+
+
+
+
+
+
+
+=========================================================================================
+
+Phase 1:
+--------
+
+Started:29/03/2024
+Completed:
+
+Backend:
+- Create an apollo server using nodejs/expressjs
+- Create Graphql Schema
+	- Use Code First Approach
+	- Pass the Schema to ApolloServer instead of typedefs and resolvers
+- Create Models using sequelize-cli
+	- cts_user model
+	- cts_user_type model
+- Using the sequelize models, create tables in the database
+- Add the data into the tables
+- Create Graphql queries, mutations, types and resolvers for the tables
+
+Frontend:
+- Create Login and Signup Pages
+- Add complete functionality for signing up the user and logging it into the App
+- Create a Home page with basic structure and with minimal data i.e. Profile of the User
+
+
+Database:
+- cts_user table
+	- user_id primary-key string
+	- first_name string
+	- last_name string
+	- email string
+	- password string
+	- type_id string
+- cts_user_type table
+	- type_id primary-key string
+	- type_name string
+

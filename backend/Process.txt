@@ -1,0 +1,70 @@
+# Initialize the Project
+npm init -y
+npm pkg set type="module"
+
+# Install fundamental libraries
+npm install --save @apollo/server graphql graphql-tag @types/pg pg dotenv @types/uuid uuid graphql-sequelize lodash
+npm install --save-dev ts-node @types/node ts-node-dev
+
+# Initialize typescript in the Project
+npm install -g typescript
+tsc --init
+
+# Make the following changes in the tsconfig.json file:
+"rootDir": "./",  - Uncomment this line
+"allowJs": true,  - Uncomment this line
+"outDir": "./build",  -- Update to this line
+Add this after "compilerOptions"
+  "exclude": ["node_modules"],
+  "include": [
+    "./**/*.ts"
+  ]
+
+# Initialize sequelize in the Project
+npm install --save sequelize pg-hstore
+npm install --save-dev sequelize-cli
+npx sequelize-cli init
+
+# Create models using sequelize-cli
+npx sequelize-cli model:generate --name User --attributes firstname:string
+npx sequelize-cli model:generate --name UserType --attributes type_id:integer
+
+# Follow these steps
+Create a .env file in root directory
+Add all the values used for database connection
+
+Change the config/config.json to config/config.js
+Add module.exports in file by returning the object
+Import the values given in .env file and use them in config/config.js file
+
+Convert all the files in models/ from models/*.js to models/*.ts
+Make all the necessary changes the models/*.ts files
+- Update <const {} = require('')> statements to <import {} from ''> statements
+- Give a type(for eg. <variable>: any) to all the variables given in these files i.e. sequelize, db, file, models, etc.
+- Change the <module.exports> to <export default> in all the files
+- Add all the fields and associations in all the models
+
+Create query types in graphql/types/entity
+Create mutation types in graphql/types/input
+Create the queries in graphql/queries/
+Create the mutations in graphql/mutations/
+Create the resolvers for mutations in graphql/resolvers
+Create graphql/schema.ts file and build the schema in it
+
+Create individual files for each table in seeders/ folder
+Add the data needs to be added into the database in these files in the form of an array of objects
+Create src/utils.js file
+Import all the seeders/*.ts files
+Create individual functions to add the data in each table 
+
+Add the following script in the package.json file
+"dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+
+Create a src/ folder in root directory
+Create a src/server.ts file
+Import the schema from graphql/schema.ts
+Import all the functions from src/utils.ts
+Import db from models/index.ts 
+Create the ApolloServer and pass the schema to it
+Start the server
+npm run dev

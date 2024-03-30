@@ -1,0 +1,4 @@
+
+# To unstage a file before commit
+$ git rm --cached <filename>
+
