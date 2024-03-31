@@ -1,3 +1,10 @@
+/**
+ * Filename: models/cts__user.ts
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 'use strict';
 import { DataTypes, Model, Sequelize, HasOne } from 'sequelize';
 import { cts_user_type } from './cts__user_type';

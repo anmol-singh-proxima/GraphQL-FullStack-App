@@ -1,3 +1,10 @@
+/**
+ * Filename: utils.ts
+ * Description: Utility File having utility functions needed in the Server
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 import db from '../models';
 import { users } from '../seeders/users';
 import { userTypes } from '../seeders/userTypes';

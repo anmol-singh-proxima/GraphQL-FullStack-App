@@ -1,3 +1,10 @@
+/**
+ * Filename: CtsUserType.ts
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 const _ = require('lodash');
 import { GraphQLObjectType } from 'graphql';
 const { attributeFields } = require('graphql-sequelize');

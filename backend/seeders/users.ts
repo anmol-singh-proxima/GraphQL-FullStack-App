@@ -1,4 +1,10 @@
-// User Data to enter into the Database
+/**
+ * Filename: users.ts
+ * Description: User Data to enter into the Database
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 export const users = [
     { 
         user_id: 'Z00100',

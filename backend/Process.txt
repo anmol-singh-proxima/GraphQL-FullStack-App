@@ -1,3 +1,10 @@
+/**
+ * Filename: Process.txt
+ * Description: Text file containing major details in the process of creating the backend of the App 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+ 
 # Initialize the Project
 npm init -y
 npm pkg set type="module"

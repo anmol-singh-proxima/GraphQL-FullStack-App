@@ -1,3 +1,10 @@
+/**
+ * Filename: insertCtsUser.ts
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 import { Op } from "sequelize";
 import db from '../../models';
 
@@ -34,6 +41,8 @@ export default async (root: any, { input }: any, context: any, info: any) => {
             password: password,
             type_id: type_id,
         }, { transaction: transaction });
+
+        console.log("User value: ", user);
 
         await transaction.commit();
         console.log("User added successfully");

@@ -1,3 +1,10 @@
+/**
+ * Filename: config.js
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 require('dotenv').config();
 
 module.exports = {

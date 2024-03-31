@@ -1,3 +1,10 @@
+/**
+ * Filename: InsertCtsUserType.ts
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 
 const InsertCtsUserType = new GraphQLObjectType({

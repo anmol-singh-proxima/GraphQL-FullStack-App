@@ -1,3 +1,10 @@
+/**
+ * Filename: server.ts
+ * Description: Main Server File
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { printSchema } from 'graphql';
@@ -15,7 +22,7 @@ import db from '../models';
 // Function to start the Server
 const startServer = async () => {
     const schema = await buildSchema();
-    // console.log("Schema:", printSchema(schema));
+    console.log("Schema:", printSchema(schema));
     const server = new ApolloServer(Object.assign({
         schema,
     }));

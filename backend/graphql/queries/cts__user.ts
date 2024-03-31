@@ -1,3 +1,10 @@
+/**
+ * Filename: cts__user.ts
+ * Description: 
+ * 
+ * Create Date: 29 Mar 2024
+ */
+
 'use strict';
 
 import CtsUser from '../types/entity/CtsUser';
