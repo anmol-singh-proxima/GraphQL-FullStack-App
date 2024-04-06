@@ -8,40 +8,53 @@
 import { Op } from 'sequelize';
 import db from '../../models';
 
-export default async (root: any, { input }: any, context: any, info: any) => {
+const loginCtsUser = async (root: any, { input }: any, context: any, info: any) => {
     console.log("Executing 'loginCtsUser' resolver...");
     console.log("input:", input);
-    const { email, password } = input;
     const transaction: any = await db.sequelize.transaction();
-    let userData = [];
+    let user: any = {};
+    let token: any = "";
 
     try {
-        userData = await db.cts_user.findOne({
+        const instance = await db.cts_user.findAll({
             where: { 
                 [Op.and]: [
-                    { email: email },
-                    { password: password },
+                    { email: input.email },
+                    { password: input.password },
                 ] 
             }
         }, { transaction: transaction });
 
-        if(userData === null) {
-            throw new Error("User doesn't exists");
+        if(!instance) {
+            throw new Error("[loginCtsUser]: select instance failed");
+        }
+        if(instance.length == 0) {
+            throw new Error(`[loginCtsUser]: EmailId / UserId Not Found`);
+        }
+        if(instance.length != 1) {
+            throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance.length}.`);
         }
 
-        const token = 'this is the token';
-        const user = userData.dataValues;
-        const userTypeData = await db.cts_user_type.findOne({
-            where: { type_id: user.type_id }
-        });
+        // console.log("[loginCtsUser]: instance:", instance);
+        // console.log("[loginCtsUser]: instance.dataValues:", instance[0].dataValues);
+        user = instance[0].dataValues;
+        token = 'ThisIsTheToken';
+        console.log("[loginCtsUser]: User Logged in Successfully");
 
-        user.type_name = userTypeData.dataValues.type_name;
-        console.log("User Logged in Successfully");
-        await transaction.commit();
-        return { user, token };
     } catch(err) {
-        console.error(err);
-        await transaction.rollback();
-        return { err };
+        transaction ? await transaction.rollback() : true;
+        console.error('[loginCtsUser]:', err);
+        return err;
     }
-};
+
+    try {
+        transaction ? await transaction.commit() : true;
+    } catch(err) {
+        console.error('[loginCtsUser]:', err);
+        return err;
+    }
+
+    return { user, token };
+}
+
+export default loginCtsUser;

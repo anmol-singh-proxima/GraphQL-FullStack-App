@@ -1,5 +1,5 @@
 /**
- * Filename: models/cts__user_type.ts
+ * Filename: models/cts_user_type.ts
  * Description: 
  * 
  * Create Date: 29 Mar 2024
@@ -22,7 +22,10 @@ export default function(sequelize: Sequelize) {
         allowNull: false,
         unique: true,
       },
-      type_name: { type: DataTypes.STRING },
+      type_name: { 
+        type: DataTypes.STRING,
+        allowNull: false,
+     },
     }, {
       sequelize,
       modelName: 'cts_user_type',

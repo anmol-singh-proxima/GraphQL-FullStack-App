@@ -1,5 +1,5 @@
 /**
- * Filename: LoginCtsUser.ts
+ * Filename: LoginCtsUserInputType.ts
  * Description: 
  * 
  * Create Date: 31 Mar 2024
@@ -7,8 +7,8 @@
 
 import { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
 
-const LoginCtsUser = new GraphQLInputObjectType({
-    name: "LoginCtsUser",
+const LoginCtsUserInputType = new GraphQLInputObjectType({
+    name: "LoginCtsUserInputType",
     description: "Payload to login an existing User in the App",
     fields: {
         email: { type: new GraphQLNonNull(GraphQLString) },
@@ -16,4 +16,4 @@ const LoginCtsUser = new GraphQLInputObjectType({
     }
 });
 
-export default LoginCtsUser;
+export default LoginCtsUserInputType;

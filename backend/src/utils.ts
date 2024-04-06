@@ -7,12 +7,20 @@
 
 import db from '../models';
 import { users } from '../seeders/users';
+import { userRoles } from '../seeders/userRoles';
 import { userTypes } from '../seeders/userTypes';
 
 // Function to add the Data rows in the cts_user table in the Database
 export const createUsers = () => {
     users.map(user => {
         db.cts_user.create(user);
+    })
+}
+
+// Function to add the Data rows in the cts_user_role table in the Database
+export const createUserRoles = () => {
+    userRoles.map(userRole => {
+        db.cts_user_role.create(userRole);
     })
 }
 

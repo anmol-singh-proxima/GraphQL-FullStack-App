@@ -1,5 +1,5 @@
 /**
- * Filename: cts__user_type.ts
+ * Filename: graphql/queries/cts_user_type.ts
  * Description: 
  * 
  * Create Date: 29 Mar 2024
@@ -13,7 +13,6 @@ const { resolver, defaultListArgs } = require('graphql-sequelize');
 import { GraphQLList } from 'graphql';
 
 async function ctsUserType() {
-    // console.log("UserType Fields in queries:", CtsUserType.getFields());
     return {
         cts_user_type: {
             type: new GraphQLList(CtsUserType),

@@ -1,5 +1,5 @@
 /**
- * Filename: LoginCtsUserType.ts
+ * Filename: LoginCtsUserReturnType.ts
  * Description: 
  * 
  * Create Date: 31 Mar 2024
@@ -7,8 +7,8 @@
 
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 
-const LoginCtsUserType = new GraphQLObjectType({
-    name: 'LoginCtsUserType',
+const LoginCtsUserReturnType = new GraphQLObjectType({
+    name: 'LoginCtsUserReturnType',
     description: "Payload returned by Server when User login to the App",
     fields: {
         user: { type: new GraphQLObjectType({
@@ -19,7 +19,7 @@ const LoginCtsUserType = new GraphQLObjectType({
                 first_name: { type: GraphQLString },
                 last_name: { type: GraphQLString },
                 email: { type: new GraphQLNonNull(GraphQLString) },
-                type_id: { type: GraphQLString },
+                role_id: { type: GraphQLString },
                 type_name: { type: GraphQLString },
             }
         })},
@@ -27,4 +27,4 @@ const LoginCtsUserType = new GraphQLObjectType({
     }
 });
 
-export default LoginCtsUserType;
+export default LoginCtsUserReturnType;

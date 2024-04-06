@@ -1,5 +1,5 @@
 /**
- * Filename: models/cts__user.ts
+ * Filename: models/cts_user.ts
  * Description: 
  * 
  * Create Date: 29 Mar 2024
@@ -7,18 +7,18 @@
 
 'use strict';
 import { DataTypes, Model, Sequelize, HasOne } from 'sequelize';
-import { cts_user_type } from './cts__user_type';
+import { cts_user_role } from './cts_user_role';
 
 export class cts_user extends Model {
     public id!: string;
     static associate: any;
-    static CTSUserType: HasOne<cts_user, cts_user_type>;
+    static CtsUserRole: HasOne<cts_user, cts_user_role>;
 }
 
 export default function(sequelize: Sequelize) {
   cts_user.init({
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(6),
       primaryKey: true,
       allowNull: false,
       unique: true,
@@ -35,14 +35,25 @@ export default function(sequelize: Sequelize) {
       allowNull: false,
       unique: true,
     },
-    type_id: { 
+    role_id: { 
       type: DataTypes.STRING,
       references: {
-        model: 'cts_user_type',
-        key: 'type_id'
+        model: 'cts_user_role',
+        key: 'role_id'
       },
-      field: 'type_id',
+      field: 'role_id',
     },
+    created_dt: { 
+      type: DataTypes.DATE, 
+      allowNull: false, 
+      defaultValue: Sequelize.fn('NOW') 
+    },
+    created_by: { 
+      type: DataTypes.STRING(6), 
+      allowNull: false 
+    },
+    deleted_dt: { type: DataTypes.DATE },
+    deleted_by: { type: DataTypes.STRING(6) },
   }, {
     sequelize,
     modelName: 'cts_user',
@@ -51,9 +62,9 @@ export default function(sequelize: Sequelize) {
   });
 
   cts_user.associate = function(models: any) {
-    cts_user.CTSUserType = cts_user.hasOne(
-      models.cts_user_type,
-      { foreignKey: "type_id", sourceKey: "type_id" }
+    cts_user.CtsUserRole = cts_user.hasOne(
+      models.cts_user_role,
+      { foreignKey: "role_id", sourceKey: "role_id" }
     );
   }
 

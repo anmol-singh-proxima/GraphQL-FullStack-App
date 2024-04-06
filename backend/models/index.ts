@@ -13,8 +13,9 @@ const config = require(__dirname + '/../config/config.js')[env];
 let db: any = {};
 require('dotenv').config();
 
-import cts_user from './cts__user';
-import cts_user_type from './cts__user_type';
+import cts_user from './cts_user';
+import cts_user_type from './cts_user_type';
+import cts_user_role from './cts_user_role';
 
 let sequelize: any;
 if (config.use_env_variable) {
@@ -28,6 +29,7 @@ db = {
   Sequelize,
   cts_user: cts_user(sequelize),
   cts_user_type: cts_user_type(sequelize),
+  cts_user_role: cts_user_role(sequelize),
 }
 
 Object.keys(db).forEach(model => {

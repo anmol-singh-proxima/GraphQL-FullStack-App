@@ -5,13 +5,11 @@
  * Create Date: 29 Mar 2024
  */
 
-import { createUser } from './createUser';
-import { loginUser } from './loginUser';
+import { ctsUserMutation } from './ctsUserMutation';
 
 async function mutations() {
     return {
-        ...await createUser(),
-        ...await loginUser(),
+        ...await ctsUserMutation(),
     }
 }
 
