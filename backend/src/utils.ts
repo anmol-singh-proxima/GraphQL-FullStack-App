@@ -6,9 +6,9 @@
  */
 
 import db from '../models';
-import { users } from '../seeders/users';
-import { userRoles } from '../seeders/userRoles';
-import { userTypes } from '../seeders/userTypes';
+import { users } from '../seeders/UserData';
+import { userRoles } from '../seeders/UserRoleData';
+import { userTypes } from '../seeders/UserTypeData';
 
 // Function to add the Data rows in the cts_user table in the Database
 export const createUsers = () => {
