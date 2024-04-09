@@ -5,19 +5,21 @@
  * Create Date: 01 Apr 2024
  */
 
-import { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
+const { attributeFields } = require('graphql-sequelize');
+import { GraphQLInputObjectType } from 'graphql';
+import db from '../../../models';
 
 const UpdateCtsUserInputType = new GraphQLInputObjectType({
     name: "UpdateCtsUserInputType",
     description: "Payload to Update an existing User in Database",
-    fields: {
-        user_id: { type: GraphQLString },
-        first_name: { type: GraphQLString },
-        last_name: { type: GraphQLString },
-        email: { type: GraphQLString },
-        password: { type: GraphQLString },
-        type_id: { type: GraphQLString },
-    }
+    fields: () => {
+        return {
+            ...attributeFields(db.cts_user, {
+                exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
+                allowNull: true,
+            })
+        }
+    },
 });
 
 export default UpdateCtsUserInputType;

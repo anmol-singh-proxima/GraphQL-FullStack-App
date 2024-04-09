@@ -5,7 +5,6 @@
  * Create Date: 05 Apr 2024
  */
 
-'use strict';
 import { DataTypes, HasOne, Model, Sequelize } from 'sequelize';
 import { cts_user_type } from './cts_user_type';
 
@@ -35,6 +34,7 @@ export default function(sequelize: Sequelize) {
           key: 'type_id'
         },
         field: 'type_id',
+        allowNull: false,
       },
     }, {
       sequelize,

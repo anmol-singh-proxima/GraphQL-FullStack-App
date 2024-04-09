@@ -5,18 +5,20 @@
  * Create Date: 01 Apr 2024
  */
 
-import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+const { attributeFields } = require('graphql-sequelize');
+import { GraphQLObjectType } from "graphql";
+import db from '../../../models';
 
 const UpdateCtsUserReturnType = new GraphQLObjectType({
     name: 'UpdateCtsUserReturnType',
-    fields: {
-        user_id: { type: GraphQLString },
-        first_name: { type: GraphQLString },
-        last_name: { type: GraphQLString },
-        email: { type: GraphQLString },
-        password: { type: GraphQLString },
-        role_id: { type: GraphQLString },
-    }
+    fields: () => {
+        return {
+            ...attributeFields(db.cts_user, {
+                exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
+                allowNull: true,
+            })
+        }
+    },
 });
 
 export default UpdateCtsUserReturnType;

@@ -8,17 +8,21 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { printSchema } from 'graphql';
-import { buildSchema } from '../graphql/schema';
-import db from '../models';
+import { buildSchema } from './graphql/schema';
+import db from './models';
 
 /**
  * Uncomment the following code to add data to the tables in the database
  * Should be executed only once
+ * **** CAUTION ****
  */
-// import { createUsers, createUserRoles, createUserTypes } from './utils';
-// createUsers();
-// createUserRoles();
+// import { createAssignments, createProjects, createTasks, createUsers, createUserRoles, createUserTypes } from './utils/createTablesData';
 // createUserTypes();
+// createUserRoles();
+// createUsers();
+// createProjects();
+// createAssignments();
+// createTasks();
 
 // Function to start the Server
 const startServer = async () => {

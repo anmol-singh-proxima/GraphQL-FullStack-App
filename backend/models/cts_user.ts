@@ -5,14 +5,17 @@
  * Create Date: 29 Mar 2024
  */
 
-'use strict';
-import { DataTypes, Model, Sequelize, HasOne } from 'sequelize';
+import { DataTypes, Model, Sequelize, HasOne, BelongsToMany, HasMany } from 'sequelize';
 import { cts_user_role } from './cts_user_role';
+import { cts_project } from './cts_project';
+import { cts_task } from './cts_task';
 
 export class cts_user extends Model {
     public id!: string;
     static associate: any;
     static CtsUserRole: HasOne<cts_user, cts_user_role>;
+    static CtsProjects: BelongsToMany<cts_user, cts_project>;
+    static CtsTasks: HasMany<cts_user, cts_task>;
 }
 
 export default function(sequelize: Sequelize) {
@@ -42,6 +45,7 @@ export default function(sequelize: Sequelize) {
         key: 'role_id'
       },
       field: 'role_id',
+      allowNull: false,
     },
     created_dt: { 
       type: DataTypes.DATE, 
@@ -65,6 +69,19 @@ export default function(sequelize: Sequelize) {
     cts_user.CtsUserRole = cts_user.hasOne(
       models.cts_user_role,
       { foreignKey: "role_id", sourceKey: "role_id" }
+    );
+    cts_user.CtsProjects = cts_user.belongsToMany(
+      models.cts_project, { 
+        through: 'cts_assignment', 
+        foreignKey: "user_id", 
+        otherKey: "project_id" 
+      }
+    );
+    cts_user.CtsTasks = cts_user.hasMany(
+      models.cts_task, { 
+        foreignKey: "user_id", 
+        sourceKey: "user_id" 
+      }
     );
   }
 

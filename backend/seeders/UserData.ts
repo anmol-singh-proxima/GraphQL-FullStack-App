@@ -1,5 +1,5 @@
 /**
- * Filename: users.ts
+ * Filename: UserData.ts
  * Description: User Data to enter into the Database
  * 
  * Create Date: 29 Mar 2024
@@ -16,7 +16,7 @@ export const users = [
         created_by: 'Z00007',
     },
     { 
-        user_id: 'Z00100',
+        user_id: 'Z01000',
         first_name: "Raksha",
         last_name: "Babu",
         email: "rakshab@zcorp.com",
@@ -25,7 +25,7 @@ export const users = [
         created_by: 'Z00007',
     },
     {
-        user_id: 'Z00200',
+        user_id: 'Z02000',
         first_name: "Apoorva",
         last_name: "Deeksha",
         email: "apoorvad@zcorp.com",
@@ -34,7 +34,7 @@ export const users = [
         created_by: 'Z00007',
     },
     { 
-        user_id: 'Z00300',
+        user_id: 'Z02001',
         first_name: "Puja",
         last_name: "Kumari",
         email: "pujak@zcorp.com",
@@ -42,8 +42,17 @@ export const users = [
         role_id: 'PRLE',
         created_by: 'Z00007',
     },
+    { 
+        user_id: 'Z02002',
+        first_name: "Vannie",
+        last_name: "Dogra",
+        email: "vaniied@zcorp.com",
+        password: "vaniied@123",
+        role_id: 'PRLE',
+        created_by: 'Z00007',
+    },
     {
-        user_id: 'Z00400',
+        user_id: 'Z03000',
         first_name: "Akansha",
         last_name: "Tanwar",
         email: "akanshat@zcorp.com",
@@ -52,7 +61,7 @@ export const users = [
         created_by: 'Z00007',
     },
     { 
-        user_id: 'Z00500',
+        user_id: 'Z03001',
         first_name: "Surbhi",
         last_name: "Dalal",
         email: "surbhid@zcorp.com",
@@ -61,7 +70,7 @@ export const users = [
         created_by: 'Z00007',
     },
     { 
-        user_id: 'Z00600',
+        user_id: 'Z03002',
         first_name: "Madhu",
         last_name: "Shree",
         email: "madhus@zcorp.com",
@@ -69,8 +78,26 @@ export const users = [
         role_id: 'DVPR',
         created_by: 'Z00007',
     },
+    { 
+        user_id: 'Z03003',
+        first_name: "Shreya",
+        last_name: "Bhatt",
+        email: "shreyab@zcorp.com",
+        password: "shreyab@123",
+        role_id: 'DVPR',
+        created_by: 'Z00007',
+    },
+    { 
+        user_id: 'Z03004',
+        first_name: "Nandhini",
+        last_name: "Natrajan",
+        email: "nandhinin@zcorp.com",
+        password: "nandhinin@123",
+        role_id: 'DVPR',
+        created_by: 'Z00007',
+    },
     {
-        user_id: "Z00700",
+        user_id: "Z04000",
         first_name: "Anukriti",
         last_name: "Tripathi",
         email: "anukritit@zcorp.com",
@@ -79,7 +106,7 @@ export const users = [
         created_by: 'Z00007',
     },
     {
-        user_id: "Z00800",
+        user_id: "Z04001",
         first_name: "Meghna",
         last_name: "Gowda",
         email: "meghnag@zcorp.com",
@@ -88,7 +115,7 @@ export const users = [
         created_by: 'Z00007',
     },
     {
-        user_id: "Z00900",
+        user_id: "Z05000",
         first_name: "Anu",
         last_name: "Shree",
         email: "anushree@zcorp.com",

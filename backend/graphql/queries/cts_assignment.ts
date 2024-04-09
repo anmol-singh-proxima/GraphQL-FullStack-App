@@ -1,26 +1,26 @@
 /**
- * Filename: graphql/queries/cts_user.ts
+ * Filename: graphql/queries/cts_assignment.ts
  * Description: 
  * 
- * Create Date: 29 Mar 2024
+ * Create Date: 07 Apr 2024
  */
 
 const { resolver, defaultListArgs } = require('graphql-sequelize');
 import { GraphQLList } from 'graphql';
 import db from '../../models';
-import CtsUser from '../types/entity/CtsUser';
+import CtsAssignment from '../types/entity/CtsAssignment';
 
-async function ctsUser() {
+async function ctsAssignment() {
     return {
-        cts_user: {
-            type: new GraphQLList(CtsUser),
-            args: defaultListArgs(db.cts_user),
-            resolve: resolver(db.cts_user, {
+        cts_assignment: {
+            type: new GraphQLList(CtsAssignment),
+            args: defaultListArgs(db.cts_assignment),
+            resolve: resolver(db.cts_assignment, {
                 before: (findOptions: any, args: any, context: any) => {
                     if(args.where) {
                         findOptions.where = args.where;
                     }
-                    findOptions.order = [['user_id', 'ASC']];
+                    findOptions.order = [['assignment_id', 'ASC']];
                     return findOptions;
                 },
             })
@@ -28,4 +28,4 @@ async function ctsUser() {
     }
 }
 
-export { ctsUser };
+export { ctsAssignment };

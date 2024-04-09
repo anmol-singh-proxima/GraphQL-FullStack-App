@@ -5,7 +5,6 @@
  * Create Date: 29 Mar 2024
  */
 
-'use strict';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 export class cts_user_type extends Model {

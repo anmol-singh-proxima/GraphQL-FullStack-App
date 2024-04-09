@@ -5,8 +5,6 @@
  * Create Date: 03 Apr 2024
  */
 
-'use strict';
-
 import { GraphQLNonNull } from "graphql";
 import InsertCtsUserReturnType from '../types/response/InsertCtsUserReturnType';
 import UpdateCtsUserReturnType from "../types/response/UpdateCtsUserReturnType";

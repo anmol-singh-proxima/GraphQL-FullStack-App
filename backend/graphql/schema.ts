@@ -5,10 +5,7 @@
  * Create Date: 29 Mar 2024
  */
 
-'use strict';
-
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-
 import { queries } from './queries';
 import { mutations } from './mutations';
 

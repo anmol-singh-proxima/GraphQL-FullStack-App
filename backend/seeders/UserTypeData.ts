@@ -1,5 +1,5 @@
 /**
- * Filename: userTypes.ts
+ * Filename: UserTypeData.ts
  * Description: Usertype Data to enter into the Database
  * 
  * Create Date: 29 Mar 2024

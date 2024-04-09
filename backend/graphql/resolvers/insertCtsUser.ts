@@ -8,41 +8,11 @@
 import { Op } from "sequelize";
 import db from '../../models';
 
-
-const _ = require('lodash');
-const { attributeFields } = require('graphql-sequelize');
-
 const insertCtsUser = async (root: any, { input }: any, context: any, info: any) => {
     console.log("Executing 'insertCtsUser' resolver...");
     console.log("input:", input);
     const transaction: any = await db.sequelize.transaction();
     let user: any = {};
-
-    // let attributes = _.assign(attributeFields(db.cts_user));
-    // console.log("User Attributes before: ", attributes);
-    // const excludedFields: string[] = ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'];
-    // excludedFields.forEach((field) => {
-    //     console.log("field:", field);
-    //     delete attributes[field];
-    // });
-    // console.log("User Attributes after: ", attributes);
-
-    // const isAdmin = true;
-    // const adminId = 'L'
-
-    // try{
-    //     if(!isAdmin) {
-    //         throw new Error("[insertCtsUser]: Only Admin can insert a User");
-    //     }
-    // } catch (err) {
-    //     console.error('[insertCtsUser]:', err);
-    //     return err;
-    // }
-
-
-
-
-    // throw new Error("Got Attributes");
 
     // Finding if User already exists or not
     try {
@@ -55,11 +25,15 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
             }
         }, { transaction: transaction });
 
+        if(!instance) {
+            throw new Error("[insertCtsUser]: Sequelize findAll instance failed");
+        }
         if(instance.length > 0) {
             throw new Error(`[insertCtsUser]: User ${input.user_id} already exists`);
         }
 
     } catch(err) {
+        transaction ? await transaction.rollback() : true;
         console.error('[insertCtsUser]:', err);
         return err;
     }
@@ -89,7 +63,7 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
         // Running the Create Query
         const instance = await db.cts_user.create(createData, createOptions);
         if(!instance) {
-            throw new Error("[insertCtsUser]: Could not insert the User data");
+            throw new Error("[insertCtsUser]: Sequelize create instance failed");
         }
         user = instance.dataValues;
 
@@ -102,6 +76,7 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
     try {
         transaction ? await transaction.commit() : true;
     } catch(err) {
+        transaction ? await transaction.rollback() : true;
         console.error('[insertCtsUser]:', err);
         return err;
     }

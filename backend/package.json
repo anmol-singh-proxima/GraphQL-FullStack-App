@@ -2,9 +2,9 @@
   "name": "app_backend",
   "version": "1.0.0",
   "description": "Backend for the App",
-  "main": "src/server.ts",
+  "main": "app.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

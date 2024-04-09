@@ -26,7 +26,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
         }, { transaction: transaction });
 
         if(!instance) {
-            throw new Error("[loginCtsUser]: select instance failed");
+            throw new Error("[loginCtsUser]: Sequelize findAll instance failed");
         }
         if(instance.length == 0) {
             throw new Error(`[loginCtsUser]: EmailId / UserId Not Found`);
@@ -35,8 +35,6 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
             throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance.length}.`);
         }
 
-        // console.log("[loginCtsUser]: instance:", instance);
-        // console.log("[loginCtsUser]: instance.dataValues:", instance[0].dataValues);
         user = instance[0].dataValues;
         token = 'ThisIsTheToken';
         console.log("[loginCtsUser]: User Logged in Successfully");
@@ -50,6 +48,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
     try {
         transaction ? await transaction.commit() : true;
     } catch(err) {
+        transaction ? await transaction.rollback() : true;
         console.error('[loginCtsUser]:', err);
         return err;
     }

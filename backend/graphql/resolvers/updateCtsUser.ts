@@ -5,7 +5,6 @@
  * Create Date: 01 Apr 2024
  */
 
-import { Op } from "sequelize";
 import db from '../../models';
 
 const updateCtsUser = async (root: any, { input }: any, context: any, info: any) => {
@@ -35,6 +34,7 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
             throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance.length}`);
         }
     } catch(err) {
+        transaction ? await transaction.rollback() : true;
         console.error('[updateCtsUser]:', err);
         return err;
     }
@@ -66,10 +66,6 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
             return {...accumulator, [field]: ''};
         }, {});
         updateData = Object.assign(updateData, input);
-        updateData = Object.assign(updateData, {
-            name: 'champi',
-        })
-        console.log("updateData", updateData);
 
         // Running the Update Query
         const instance = await db.cts_user.update(updateData, updateOptions);
@@ -92,6 +88,7 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
     try {
         transaction ? await transaction.commit() : true;
     } catch(err) {
+        transaction ? await transaction.rollback() : true;
         console.error('[updateCtsUser]:', err);
         return err;
     }
