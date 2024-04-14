@@ -20,7 +20,7 @@ async function ctsUserType() {
                     if(args.where) {
                         findOptions.where = args.where;
                     }
-                    findOptions.order = [['TYPE_id', 'ASC']];
+                    findOptions.order = [['type_id', 'ASC']];
                     return findOptions;
                 },
             })

@@ -6,10 +6,12 @@
  */
 
 import { ctsUserMutation } from './ctsUserMutation';
+import { ctsTaskMutation } from './ctsTaskMutation';
 
 async function mutations() {
     return {
         ...await ctsUserMutation(),
+        ...await ctsTaskMutation(),
     }
 }
 

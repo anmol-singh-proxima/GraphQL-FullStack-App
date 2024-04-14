@@ -17,11 +17,11 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
 
     try {
         const instance = await db.cts_user.findAll({
-            where: { 
+            where: {
                 [Op.and]: [
                     { email: input.email },
                     { password: input.password },
-                ] 
+                ]
             }
         }, { transaction: transaction });
 
@@ -29,10 +29,10 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
             throw new Error("[loginCtsUser]: Sequelize findAll instance failed");
         }
         if(instance.length == 0) {
-            throw new Error(`[loginCtsUser]: EmailId / UserId Not Found`);
+            throw new Error(`[loginCtsUser]: EmailId / Password Not Found`);
         }
         if(instance.length != 1) {
-            throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance.length}.`);
+            throw new Error(`[loginCtsUser]: Expected 1 user, found ${instance.length}.`);
         }
 
         user = instance[0].dataValues;
@@ -53,7 +53,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
         return err;
     }
 
-    return { user, token };
+    return { token };
 }
 
 export default loginCtsUser;

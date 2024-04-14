@@ -14,17 +14,17 @@ const LoginCtsUserReturnType = new GraphQLObjectType({
     description: "Payload returned by Server when User login to the App",
     fields: () => {
         return {
-            user: {
-                type: new GraphQLObjectType({
-                name: 'LoginUser',
-                description: "User Data to sent to Client when User login to the App",
-                fields: {
-                    ...attributeFields(db.cts_user, {
-                        exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
-                        allowNull: true,
-                    })
-                }
-            })},
+            // user: {
+            //     type: new GraphQLObjectType({
+            //     name: 'LoginUser',
+            //     description: "User Data to sent to Client when User login to the App",
+            //     fields: {
+            //         ...attributeFields(db.cts_user, {
+            //             exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
+            //             allowNull: true,
+            //         })
+            //     }
+            // })},
             token: { type: GraphQLString },
         }
     },

@@ -18,7 +18,7 @@ export default function(sequelize: Sequelize) {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false,
+      // allowNull: false,
     },
     title: { 
       type: DataTypes.TEXT,
@@ -76,8 +76,9 @@ export default function(sequelize: Sequelize) {
 
     // Date of assigning the task to the user
     assigned_dt: { type: DataTypes.DATE, 
-      allowNull: false, 
-      defaultValue: Sequelize.fn('NOW') },
+      // allowNull: false, 
+      // defaultValue: Sequelize.fn('NOW') 
+    },
     // Who assigned the task to the user
     assigned_by: { type: DataTypes.STRING(6) },
 
