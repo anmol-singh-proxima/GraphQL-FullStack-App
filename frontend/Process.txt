@@ -1,0 +1,38 @@
+# Initialize the Project
+npm install -g vue@latest
+vue create frontend -n
+
+# Remove eslint-prettier (since that was causing unnecessary problems)
+npm uninstall --save @vue/cli-plugin-eslint
+npm uninstall --save prettier
+
+# Add the below code snippet in rules object of .eslintrc.js file
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+    ],
+
+# Install the library
+npm install --save axios
+
+# Add graphql in the project
+
+Follow these links to add apollo in the Project:
+https://apollo.vuejs.org/guide/installation.html
+https://apollo.vuejs.org/guide-composable/setup.html
+
+npm install --save graphql graphql-tag @apollo/client
+Create an apollo.config.js in the root directory and add the required code
+
+npm install --save @vue/apollo-composable
+
+
+
+
+npm install --save @vue/apollo-option @vue/apollo-components
+Make the necessary changes in the src/main.js file
+- Import @vue/apollo and create apolloClient and apolloProvider
+- Use them in the createApp().use()
+

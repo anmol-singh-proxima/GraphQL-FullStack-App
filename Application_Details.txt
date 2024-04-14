@@ -80,7 +80,10 @@ Roles of each User:
 
 
 
-
+Advance Features:
+- Creare an Admin User
+- Admin would be able to delete(logically) the users from the database
+- Admin would be able to add a new user into the database
 
 
 
@@ -118,8 +121,97 @@ Database:
 	- last_name string
 	- email string
 	- password string
-	- type_id string
+	- role_id string
+	- created_dt date
+	- created_by string
+	- deleted_dt date
+	- deleted_by string
+
 - cts_user_type table
 	- type_id primary-key string
 	- type_name string
+
+- cts_user_role
+	- role_id primary-key string
+	- role_name string
+	- role_level string
+	- type_id string
+
+- cts_project table
+	- project_id primary key string unique not null
+	- release not null
+	- title not null
+	- description 
+	- status - active, inactive
+	- progress - not started, started, blocked, completed, archived
+	- project_manager (user_id)
+	- project_lead (user_id)
+	- start_date dateonly
+	- end_date dateonly
+	- created_dt date not null
+	- created_by string not null
+	- deleted_dt date 
+	- deleted_by string
+
+- cts_assignment table
+	- assignment_id primary key int auto increment
+	- user_id not null
+	- project_id not null
+	- assigned_dt
+	- assigned_by (user_id)
+	- removed_dt
+	- removed_by (user_id)
+
+- cts_task table
+	- task_id primary key string unique not null
+	- title not null
+	- description
+	- status [active, inactive]
+	- progress [not started, started, in review, blocked, completed, archived]
+	- priority [severe, high, medium, low] not null
+	- story_points [1-5 based om the time required] not null
+	- start_date dateonly
+	- end_date dateonly
+	- user_id 
+	- project_id 
+	- assigned_dt
+	- assigned_by (user_id)
+	- removed_dt
+	- removed_by (user_id)
+	- created_dt date not null
+	- created_by string not null
+	- deleted_dt date
+	- deleted_by string
+
+
+
+cts_user belongsToMany cts_project through cts_assignment
+cts_project belongsToMany cts_user through cts_assignment
+cts_user hasMany cts_task
+cts_project hasMany cts_task
+cts_user hasMany cts_assignment (to fetch the cts_assignment compelete details)
+cts_project hasMany cts_assignment (to fetch the cts_assignment compelete details)
+
+
+User_Types for User_Roles:
+- Admin - Administrator
+- Leadership - Project Manager, Project Lead
+- Standard - Designer, Developer, Tester, Validator, Support
+
+
+Roles: Administrator, Project Manager, Project Lead, Designer, Developer, Tester, Validator, Support
+
+
+Extra Data needs to be add
+- cts_user - skills, 
+- Need to create a new table for the skills with categories
+- cts_project - design_deadline, development_deadline, testing_deadline, go_live_dt
+
+
+Process of Communication between Client and Server:
+- User will login via email and password
+- Server will send a valid token
+- By using that token the user will fetch the user data
+- Server will send the User data by checking if the token is valid
+
 
