@@ -1,22 +1,21 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <div id="home-profile">
-    <div class="section">
-        This is the Profile Page
+    <div id="tasks">
+        <h1>This is Tasks Page</h1>
     </div>
-  </div>
 </template>
 
 <script>
 /* eslint-disable */
 export default {
-  name: "ProfileComponent",
+    name: "Tasks",
 };
 </script>
 
 <!-- CSS Styling for Footer Component -->
 <style scoped>
-#home-profile {
-  display: block;
+#tasks {
+    display: block;
 }
 </style>
+  

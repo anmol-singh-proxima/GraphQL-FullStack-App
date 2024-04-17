@@ -6,20 +6,20 @@
  */
 
 import db from '../../models';
+import UpdateCtsTaskInputType from '../types/input/UpdateCtsTaskInputType';
 
 const updateCtsTask = async (root: any, { input }: any, context: any, info: any) => {
     console.log("Executing 'updateCtsTask' resolver...");
     console.log("input:", input);
     const transaction: any = await db.sequelize.transaction();
-    let user: any = {};
+    let task: any = {};
 
-    // Finding if the User exists or not
+    // Finding if the Task exists or not
     try {
-        const query = "SELECT * FROM cts_user WHERE user_id = :userId AND email = :emailId;";
+        const query = "SELECT * FROM cts_task WHERE task_id = :taskId;";
         const instance = await db.sequelize.query(query, {
             replacements: {
-                userId: input.user_id,
-                emailId: input.email,
+                taskId: input.task_id,
             },
             type: db.sequelize.QueryTypes.SELECT
         });
@@ -28,10 +28,10 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
             throw new Error("[updateCtsTask]: Select instance failed");
         }
         if(instance.length == 0) {
-            throw new Error(`[updateCtsTask]: EmailId / UserId Not Found`);
+            throw new Error(`[updateCtsTask]: TaskId Not Found`);
         }
         if(instance.length != 1) {
-            throw new Error(`[updateCtsTask]: Expected 1 user, found ${instance.length}`);
+            throw new Error(`[updateCtsTask]: Expected 1 task, found ${instance.length}`);
         }
     } catch(err) {
         transaction ? await transaction.rollback() : true;
@@ -39,46 +39,39 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
         return err;
     }
 
-    // Updating the User if it exists
+    // Updating the Task if it exists
     try {
         // Setting the fields to be updated
-        const modelAttributes = db.cts_user.rawAttributes;
-        const excludedFields: string[] = ['user_id', 'email'];
-
-        let fields = Object.keys(modelAttributes);
-        fields = fields.filter((field) => {
-            return !excludedFields.includes(field)
-        });
+        const fields = Object.keys(UpdateCtsTaskInputType.getFields());
+        console.log("[insertCtsTask]: fields:", fields);
 
         // Setting the Options to pass to the Query
         const updateOptions = {
             transaction: transaction,
             where: {
-                email: input.email,
-                user_id: input.user_id,
+                task_id: input.task_id,
             },
             fields: fields,
             returning: true,
         }
 
         // Setting the required Update Data
-        let updateData = fields.reduce((accumulator, field) => {
-            return {...accumulator, [field]: ''};
-        }, {});
+        let updateData = {};
         updateData = Object.assign(updateData, input);
 
         // Running the Update Query
-        const instance = await db.cts_user.update(updateData, updateOptions);
+        const instance = await db.cts_task.update(updateData, updateOptions);
         if(!instance) {
             throw new Error("[updateCtsTask]: Sequelize update instance failed");
         }
         if(instance[0] == 0) {
-            throw new Error(`[updateCtsTask]: Could not update the User data`);
+            throw new Error(`[updateCtsTask]: Could not update the Task data`);
         }
         if(instance[1].length > 1) {
-            throw new Error(`[updateCtsTask]: Expected 1 user, found ${instance[1].length}.`)
+            throw new Error(`[updateCtsTask]: Expected 1 task, found ${instance[1].length}.`)
         }
-        user = instance[1][0].dataValues;
+        task = instance[1][0].dataValues;
+
     } catch(err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsTask]:', err);
@@ -93,7 +86,7 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
         return err;
     }
 
-    return user;
+    return task;
 }
 
 export default updateCtsTask;

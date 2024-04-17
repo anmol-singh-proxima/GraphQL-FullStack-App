@@ -11,7 +11,7 @@ import db from '../../../models';
 
 const InsertCtsTaskInputType = new GraphQLInputObjectType({
     name: "InsertCtsTaskInputType",
-    description: "Payload to Create a new User in Database",
+    description: "Payload to Create a new Task in Database",
     fields: () => {
         return {
             ...attributeFields(db.cts_task, {

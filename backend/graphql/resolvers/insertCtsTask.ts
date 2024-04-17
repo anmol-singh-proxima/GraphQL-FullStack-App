@@ -30,13 +30,8 @@ const insertCtsTask = async (root: any, { input }: any, context: any, info: any)
         //     return !excludedFields.includes(field)
         // });
 
-        let ctsTaskInputFields = InsertCtsTaskInputType.getFields();
-
-        const fields = Object.keys(ctsTaskInputFields);
-        // const inputFields = Object.keys(input[0]);
-
+        const fields = Object.keys(InsertCtsTaskInputType.getFields());
         console.log("[insertCtsTask]: fields:", fields);
-        // console.log("[insertCtsTask]: inputFields:", inputFields);
 
         // Setting the Options to pass to the Query
         const createOptions = {
@@ -46,16 +41,16 @@ const insertCtsTask = async (root: any, { input }: any, context: any, info: any)
         }
 
         // Setting the Data to be added
-        // let createData: {}[] = [];
-        // input.forEach((inputElement: any) => {
-        //     let obj = {};
-        //     obj = Object.assign(obj, inputElement);
-        //     createData.push(obj);
-        // });
-        // console.log("[insertCtsTask]: CreateData:", createData);
+        let createData: {}[] = [];
+        input.forEach((inputElement: any) => {
+            let obj = {};
+            obj = Object.assign(obj, inputElement);
+            createData.push(obj);
+        });
+        console.log("[insertCtsTask]: CreateData:", createData);
 
         // Running the bulkCreate Query
-        const instance = await db.cts_task.bulkCreate(input, createOptions);
+        const instance = await db.cts_task.bulkCreate(createData, createOptions);
         if(!instance) {
             throw new Error("[insertCtsTask]: Sequelize create instance failed");
         }

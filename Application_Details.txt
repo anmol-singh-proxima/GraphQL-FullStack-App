@@ -24,14 +24,6 @@ Data:
 
 
 
-Schema Structure:
-
-
-
-
-
-
-
 
 
 Note:
@@ -214,4 +206,15 @@ Process of Communication between Client and Server:
 - By using that token the user will fetch the user data
 - Server will send the User data by checking if the token is valid
 
+
+
+UI:
+Sections in Home Page:
+- Menu Section
+- Main Section
+
+Types of Projects and Tasks:
+- All Projects
+- Active Projects
+- Completed Projects
 

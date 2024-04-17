@@ -21,13 +21,13 @@ export default {
     SignupForm,
   },
   created() {
-        const token = sessionStorage.getItem('token');
-        const user = sessionStorage.getItem('user');
-        if(token && user) {
-          console.log("User already logged in");
-          this.$router.push({ name: 'home' });
-        }
-    },
+    const token = sessionStorage.getItem('token');
+    const user = sessionStorage.getItem('user');
+    if(token && user) {
+      console.log("User already logged in");
+      this.$router.push({ name: 'home' });
+    }
+  },
 };
 </script>
 

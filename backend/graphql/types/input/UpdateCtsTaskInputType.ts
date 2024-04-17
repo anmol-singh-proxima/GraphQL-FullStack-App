@@ -11,11 +11,11 @@ import db from '../../../models';
 
 const UpdateCtsTaskInputType = new GraphQLInputObjectType({
     name: "UpdateCtsTaskInputType",
-    description: "Payload to Create a new User in Database",
+    description: "Payload to Update an existing User in Database",
     fields: () => {
         return {
             ...attributeFields(db.cts_task, {
-                exclude: ['deleted_dt', 'deleted_by'],
+                exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
                 allowNull: true,
             })
         }

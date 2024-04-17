@@ -31,12 +31,12 @@ const startServer = async () => {
     const server = new ApolloServer(Object.assign({
         schema,
     }));
-    db.sequelize.sync().then(async () => {
+    // db.sequelize.sync().then(async () => {
         const { url } = await startStandaloneServer(server, {
             listen: { port: 4000 },
         });
         console.log(`🚀  Server ready at: ${url}`);
-    })
+    // })
 }
 
 startServer();

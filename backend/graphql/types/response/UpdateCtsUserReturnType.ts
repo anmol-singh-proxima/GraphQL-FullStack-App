@@ -14,7 +14,7 @@ const UpdateCtsUserReturnType = new GraphQLObjectType({
     fields: () => {
         return {
             ...attributeFields(db.cts_user, {
-                exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
+                // exclude: ['created_dt', 'created_by', 'deleted_dt', 'deleted_by'],
                 allowNull: true,
             })
         }

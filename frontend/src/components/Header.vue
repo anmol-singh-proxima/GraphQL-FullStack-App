@@ -2,10 +2,11 @@
 <template>
   <section id="header">
     <div class="brand">
-      <a :href="getRouteLink('login')">CTS</a>
+      <a :href="getRouteLink('home')">CTS</a>
       <span>Employee Portal</span>
     </div>
     <div v-if="isLoggedIn" class="nav-links-login">
+      <span v-if="user">Hi {{ user.first_name }}!</span>
       <a class="profileBtn" v-on:click="showProfile">Profile</a>
       <a class="logoutBtn" v-on:click="logout">Logout</a>
     </div>
@@ -22,10 +23,16 @@ export default {
   name: "HeaderComponent",
   props: {
     isLoggedIn: Boolean,
+    user: Object,
   },
   emits: {
     showProfile: () => {
       return true;
+    }
+  },
+  watch: {
+    user(newValue, oldValue) {
+      this.user = newValue;
     }
   },
   methods: {
