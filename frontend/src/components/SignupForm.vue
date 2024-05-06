@@ -45,6 +45,7 @@ export default {
   flex: 1;
   background-color: rgba(10, 10, 10, 0.5);
   padding: 20px;
+  overflow-y: auto;
 }
 
 #content .signup {

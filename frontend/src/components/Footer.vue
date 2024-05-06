@@ -21,6 +21,7 @@ export default {
   justify-content: space-between;
   padding: 20px;
   background-color: #222;
+  margin-top: auto;
 }
 #footer .copyright {
   font-size: 0.9rem;

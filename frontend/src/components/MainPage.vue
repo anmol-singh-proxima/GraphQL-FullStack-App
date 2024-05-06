@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <div id="main-page">
+  <div v-if="isLoggedIn" id="main-page">
     <div class="menu-section">
       <MenuSection 
       :menuItems="menuItems"
@@ -25,6 +25,9 @@ export default {
   components: {
     MenuSection,
     MainSection,
+  },
+  props: {
+    isLoggedIn: Boolean,
   },
   data() {
     return {
@@ -56,7 +59,7 @@ export default {
   /* grid-template-columns: 25% 25% 25% 25%; */
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-rows: 50px auto 50px;
-  min-height: 100%;
+  height: 100%;
 }
 .menu-section {
   grid-column: 1/2;

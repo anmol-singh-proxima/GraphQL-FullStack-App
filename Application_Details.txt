@@ -5,8 +5,6 @@ Database: Postgresql
 
 
 
-
-
 Key Components of App:
 - Login & Signup Pages
 - Home Page
@@ -17,12 +15,15 @@ Key Components of App:
 
 
 
-Data:
-- Users table
-- UserType table
-- Project table
+UI:
+Sections in Home Page:
+- Menu Section
+- Main Section
 
-
+Types of Projects and Tasks:
+- All Projects
+- Active Projects
+- Completed Projects
 
 
 
@@ -73,40 +74,20 @@ Roles of each User:
 
 
 Advance Features:
-- Creare an Admin User
+- Create an Admin User
 - Admin would be able to delete(logically) the users from the database
 - Admin would be able to add a new user into the database
 
 
 
 
-=========================================================================================
-
-Phase 1:
---------
-
-Started:29/03/2024
-Completed:
-
-Backend:
-- Create an apollo server using nodejs/expressjs
-- Create Graphql Schema
-	- Use Code First Approach
-	- Pass the Schema to ApolloServer instead of typedefs and resolvers
-- Create Models using sequelize-cli
-	- cts_user model
-	- cts_user_type model
-- Using the sequelize models, create tables in the database
-- Add the data into the tables
-- Create Graphql queries, mutations, types and resolvers for the tables
-
-Frontend:
-- Create Login and Signup Pages
-- Add complete functionality for signing up the user and logging it into the App
-- Create a Home page with basic structure and with minimal data i.e. Profile of the User
-
+=======================================================================================
 
 Database:
+---------
+
+TABLES & COLUMNS
+
 - cts_user table
 	- user_id primary-key string
 	- first_name string
@@ -176,13 +157,13 @@ Database:
 	- deleted_by string
 
 
-
-cts_user belongsToMany cts_project through cts_assignment
-cts_project belongsToMany cts_user through cts_assignment
-cts_user hasMany cts_task
-cts_project hasMany cts_task
-cts_user hasMany cts_assignment (to fetch the cts_assignment compelete details)
-cts_project hasMany cts_assignment (to fetch the cts_assignment compelete details)
+Relationship between Tables:
+- cts_user belongsToMany cts_project through cts_assignment
+- cts_project belongsToMany cts_user through cts_assignment
+- cts_user hasMany cts_task
+- cts_project hasMany cts_task
+- cts_user hasMany cts_assignment (to fetch the cts_assignment compelete details)
+- cts_project hasMany cts_assignment (to fetch the cts_assignment compelete details)
 
 
 User_Types for User_Roles:
@@ -190,11 +171,11 @@ User_Types for User_Roles:
 - Leadership - Project Manager, Project Lead
 - Standard - Designer, Developer, Tester, Validator, Support
 
+User_Roles: 
+- Administrator, Project Manager, Project Lead, Designer, Developer, Tester, Validator, Support
 
-Roles: Administrator, Project Manager, Project Lead, Designer, Developer, Tester, Validator, Support
 
-
-Extra Data needs to be add
+Extra Data needs to be add:
 - cts_user - skills, 
 - Need to create a new table for the skills with categories
 - cts_project - design_deadline, development_deadline, testing_deadline, go_live_dt
@@ -208,13 +189,28 @@ Process of Communication between Client and Server:
 
 
 
-UI:
-Sections in Home Page:
-- Menu Section
-- Main Section
 
-Types of Projects and Tasks:
-- All Projects
-- Active Projects
-- Completed Projects
+=========================================================================================
 
+Phase 1:
+--------
+
+Started: 29/03/2024
+Completed: 06/05/2024
+
+Backend:
+- Create an apollo server using nodejs/expressjs
+- Create Graphql Schema
+	- Use Code First Approach
+	- Pass the Schema to ApolloServer instead of typedefs and resolvers
+- Create Models for all the tables
+- Using the sequelize models, create tables in the database
+- Add the dummy data into the tables using DataFiles
+- Create Graphql queries, mutations, types and resolvers for the tables (only required ones)
+
+Frontend:
+- Create Login and Signup Pages
+- Add complete functionality for signing up the user and logging it into the App
+- Create a Home page with basic structure and with minimal data
+	- Profile of the User 
+	- All the Projects & Tasks

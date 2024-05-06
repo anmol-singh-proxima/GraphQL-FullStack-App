@@ -25,5 +25,6 @@ export default {
 <style>
 .main-section {
     display: block;
+    height: 100%;
 }
 </style>

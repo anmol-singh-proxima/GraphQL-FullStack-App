@@ -1,9 +1,11 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
   <div id="home">
-    <HeaderComponent :isLoggedIn="isLoggedIn" :user="user" @showProfile="showProfile" />
-    <MainPage v-if="isShowMain" :isLoggedIn="isLoggedIn" />
-    <ProfilePage v-if="isShowProfile" :isLoggedIn="isLoggedIn" />
+    <HeaderComponent :isLoggedIn="isLoggedIn" @showProfile="showProfile" />
+    <div id="home-content">
+      <MainPage v-if="isShowMain" :isLoggedIn="isLoggedIn" />
+      <ProfilePage v-if="isShowProfile" :isLoggedIn="isLoggedIn" />
+    </div>
     <FooterComponent />
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
     }
   },
   created() {
+    console.log("Inside HomeView.vue");
     const token = sessionStorage.getItem('token');
     const user = sessionStorage.getItem('user');
     if(!token) {
@@ -120,7 +123,10 @@ export default {
 #home {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+}
+#home-content {
+  flex: 1;
+  overflow-y: auto;
 }
 </style>

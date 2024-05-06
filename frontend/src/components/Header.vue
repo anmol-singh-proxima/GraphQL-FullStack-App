@@ -23,16 +23,33 @@ export default {
   name: "HeaderComponent",
   props: {
     isLoggedIn: Boolean,
-    user: Object,
+  },
+  data() {
+    return {
+      user: {},
+    }
+  },
+  watch: {
+    user: (newVal, oldVal) => {
+      console.log("User in Header.vue");
+      console.log("oldVal:", oldVal);
+      console.log("newVal:", newVal);
+    }
   },
   emits: {
     showProfile: () => {
       return true;
     }
   },
-  watch: {
-    user(newValue, oldValue) {
-      this.user = newValue;
+  created() {
+    if(this.isLoggedIn) {
+      const user = sessionStorage.getItem('user');
+      if(user) {
+        this.user = user;
+        console.log("User in SessionStorage:", user);
+      } else {
+        console.log('User is not stored properly in SessionStoarge');
+      }
     }
   },
   methods: {

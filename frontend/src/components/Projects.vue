@@ -109,7 +109,7 @@ export default {
                 data: this.payload,
             })
             .then((response) => {
-                console.log("Response in retrieving user", response);
+                console.log("Response in retrieving Projects:", response);
                 this.projects = response.data.data.cts_project;
             })
             .catch((error) => {
@@ -120,7 +120,7 @@ export default {
 };
 </script>
 
-<!-- CSS Styling for Footer Component -->
+<!-- CSS Styling for Projects Component -->
 <style scoped>
 #projects {
     display: block;
@@ -131,10 +131,12 @@ export default {
     flex-wrap: wrap; */
     display: inline-block;
     padding: 10px;
-    margin: 15px 15px 0 0;
+    margin-top: 20px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    width: 48%;
+    width: 100%;
+    height: 250px;
+    overflow-y: auto;
 }
 .project-card .key-value-pair {
     padding: 5px;
