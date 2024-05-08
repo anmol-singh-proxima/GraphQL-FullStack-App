@@ -5,7 +5,7 @@
       <span class="head">Login</span>
       <span class="validation-alert" v-if="validationAlert">{{validationAlert}}</span>
       <span class="error" v-if="errorAlert">Error {{errorAlert.code}}: {{errorAlert.message}}</span>
-      <form @submit.prevent="login">
+      <form @submit.prevent="login" class="login-form">
         <input type="email" placeholder="you@example.com" id="email" v-model="email" />
         <input type="password" placeholder="************" id="password" v-model="password" />
         <button @click="login">Login</button>
@@ -56,6 +56,7 @@ export default {
     },
 
     timeoutError() {
+      document.getElementById('email').focus();
       setTimeout(() => {
           this.errorAlert = null;
       }, 3000);
@@ -124,7 +125,7 @@ export default {
 <style scoped>
 #content {
   flex: 1;
-  background-color: rgba(10, 10, 10, 0.5);
+  /* background-color: rgba(10, 10, 10, 0.5); */
   padding: 20px;
   overflow-y: auto;
 }
@@ -160,26 +161,28 @@ export default {
   border-radius: 2px;
   margin-top: 10px;
 }
-#content .login form input, #content .login form button {
+#content .login .login-form {
+  color:rgb(0, 77, 0);
+}
+#content .login .login-form input, #content .login .login-form button {
   display: block;
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
   padding: 10px 18px;
   margin: 15px 0;
-  color: green;
+  color:rgb(0, 77, 0);
   background-color: #eee;
   border: 1px solid green;
   border-radius: 6px;
 }
-#content .login form button {
+#content .login .login-form input::after {
+  color:rgb(0, 77, 0);
+}
+#content .login .login-form button {
   font-size: 1.1rem;
   color: #fff;
   text-align: center;
   background-color: green;
-}
-
-#content .queryResult > * {
-  color: #ddd;
 }
 </style>

@@ -1,7 +1,9 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
   <div id="home">
-    <HeaderComponent :isLoggedIn="false" />
+    <div class="logo-box">
+      <img src="../../public/cts_icon.png" alt="CTS" class="logo" />
+    </div>
     <LoginForm />
     <FooterComponent />
   </div>
@@ -9,14 +11,12 @@
 
 <script>
 /* eslint-disable */
-import HeaderComponent from "@/components/Header.vue";
 import FooterComponent from "@/components/Footer.vue";
 import LoginForm from "@/components/LoginForm.vue";
 
 export default {
   name: "LoginView",
   components: {
-    HeaderComponent,
     FooterComponent,
     LoginForm,
   },
@@ -35,10 +35,23 @@ export default {
 #home {
   display: flex;
   flex-direction: column;
-  background-image: url("../assets/cts_bg.jpg") !important;
+  background-image: linear-gradient(to bottom, #212121ac, #434343ac), url("../assets/cts_bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: top;
   width: 100%;
   min-height: 100vh;
+}
+.logo-box {
+  display: block;
+  height: 200px;
+  width: auto;
+  margin: auto;
+  margin-top: 5vh;
+}
+.logo {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 </style>

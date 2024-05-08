@@ -1,18 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <section id="header">
+  <section id="header" v-if="isLoggedIn">
     <div class="brand">
       <a :href="getRouteLink('home')">CTS</a>
       <span>Employee Portal</span>
     </div>
-    <div v-if="isLoggedIn" class="nav-links-login">
+    <div class="nav-links-login">
       <span v-if="user">Hi {{ user.first_name }}!</span>
       <a class="profileBtn" v-on:click="showProfile">Profile</a>
       <a class="logoutBtn" v-on:click="logout">Logout</a>
-    </div>
-    <div v-else class="nav-links-logout" >
-      <a class="loginBtn" :href="getRouteLink('login')">Login</a>
-      <a class="signupBtn" :href="getRouteLink('signup')">Signup</a>
     </div>
   </section>
 </template>
