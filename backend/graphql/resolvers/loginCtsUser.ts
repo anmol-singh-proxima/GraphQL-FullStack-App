@@ -7,13 +7,24 @@
 
 import { Op } from 'sequelize';
 import db from '../../models';
+import loginDataValidation from '../../dataValidation/loginDataValidation';
+import { createToken } from '../../auth/userToken';
 
 const loginCtsUser = async (root: any, { input }: any, context: any, info: any) => {
     console.log("Executing 'loginCtsUser' resolver...");
     console.log("input:", input);
+
+    const { error, value } = loginDataValidation(input);
+    console.log(`Response from Login Data Validation\nError: ${error}\nValue:${value}`);
+
+    if(error) {
+        console.log('[loginCtsUser]: Validation Error: Please check the input.');
+        throw new Error('Validation Error: Please check the inputs');
+    }
+
     const transaction: any = await db.sequelize.transaction();
-    let user: any = {};
-    let token: any = "";
+    let user = null;
+    let token = null;
 
     try {
         const instance = await db.cts_user.findAll({
@@ -26,17 +37,22 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
         }, { transaction: transaction });
 
         if(!instance) {
-            throw new Error("[loginCtsUser]: Sequelize findAll instance failed");
+            console.log('[loginCtsUser]: Sequelize findAll instance failed');
+            throw new Error('Internal Server Error');
         }
         if(instance.length == 0) {
-            throw new Error(`[loginCtsUser]: EmailId / Password Not Found`);
+            console.log('[loginCtsUser]: EmailId / Password Not Found');
+            throw new Error('Invalid EmailId / Password');
         }
         if(instance.length != 1) {
-            throw new Error(`[loginCtsUser]: Expected 1 user, found ${instance.length}.`);
+            console.log(`[loginCtsUser]: Expected 1 user, found ${instance.length}.`);
+            throw new Error(`Expected 1 user, found ${instance.length}.`);
         }
 
         user = instance[0].dataValues;
-        token = 'ThisIsTheToken';
+        token = createToken({ userId: user.user_id });
+        console.log("User:", user);
+        console.log("token:", token);
         console.log("[loginCtsUser]: User Logged in Successfully");
 
     } catch(err) {
@@ -53,7 +69,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
         return err;
     }
 
-    return { token };
+    return { user, token };
 }
 
 export default loginCtsUser;

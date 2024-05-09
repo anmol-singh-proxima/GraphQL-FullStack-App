@@ -75,3 +75,15 @@ Import db from models/index.ts
 Create the ApolloServer and pass the schema to it
 Start the server
 npm run dev
+
+
+===============================================================================
+
+#. Data Validation
+$ npm install --save-dev joi
+
+#. Token Generation & Validation
+$ npm install --save-dev jsonwebtoken
+
+#. Password Hashing
+

@@ -9,15 +9,12 @@ import { GraphQLNonNull } from "graphql";
 import InsertCtsUserReturnType from '../types/response/InsertCtsUserReturnType';
 import UpdateCtsUserReturnType from "../types/response/UpdateCtsUserReturnType";
 import LoginCtsUserReturnType from "../types/response/LoginCtsUserReturnType";
-import LoggedInCtsUserReturnType from "../types/response/LoggedInCtsUserReturnType";
 import InsertCtsUserInputType from "../types/input/InsertCtsUserInputType";
 import UpdateCtsUserInputType from "../types/input/UpdateCtsUserInputType";
 import LoginCtsUserInputType from "../types/input/LoginCtsUserInputType";
-import LoggedInCtsUserInputType from "../types/input/LoggedInCtsUserInputType";
 import insertCtsUser from '../resolvers/insertCtsUser';
 import updateCtsUser from "../resolvers/updateCtsUser";
 import loginCtsUser from "../resolvers/loginCtsUser";
-import loggedInCtsUser from "../resolvers/loggedInCtsUser";
 
 async function ctsUserMutation() { return {
     insertUser: {
@@ -52,17 +49,6 @@ async function ctsUserMutation() { return {
             }
         },
         resolve: loginCtsUser
-    },
-    loggedInUser: {
-        type: LoggedInCtsUserReturnType,
-        args: {
-            input: {
-                name: 'input',
-                description: 'login a user',
-                type: new GraphQLNonNull(LoggedInCtsUserInputType)
-            }
-        },
-        resolve: loggedInCtsUser
     },
 }}
 
