@@ -65,7 +65,7 @@
 /* eslint-disable */
 import axios from 'axios';
 export default {
-    name: "Tasks",
+    name: "GetTasks",
     data() {
         return {
             user: null,
@@ -75,9 +75,9 @@ export default {
     created() {
         const token = sessionStorage.getItem('token');
         const user = sessionStorage.getItem('user');
-        if(!token || !user) {
+        if(!token && !user) {
             console.log("User not Logged In");
-            this.$router.push({ name: 'login' });
+            this.$router.push({ path: '/login' });
         }
         this.user = user;
         this.getPayloadReady(token);
@@ -133,7 +133,6 @@ export default {
 <style scoped>
 #tasks {
     display: block;
-    padding: 20px;
 }
 .task-container {
     display: block;
@@ -147,7 +146,7 @@ export default {
     border: 1px solid #ddd;
     border-radius: 6px;
     width: 100%;
-    height: 250px;
+    /* height: 250px; */
     overflow-y: auto;
 }
 .task-card .key-value-pair {

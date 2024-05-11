@@ -1,14 +1,15 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <section id="header" v-if="isLoggedIn">
-    <div class="brand">
-      <a :href="getRouteLink('home')">CTS</a>
-      <span>Employee Portal</span>
+  <section id="header">
+    <div class="brand" v-on:click="showHome">
+      <p><span>CTS</span> Employee Portal</p>
     </div>
-    <div class="nav-links-login">
-      <span v-if="user">Hi {{ user.first_name }}!</span>
-      <a class="profileBtn" v-on:click="showProfile">Profile</a>
-      <a class="logoutBtn" v-on:click="logout">Logout</a>
+    <div class="nav-links">
+      <!-- <span v-if="user">Hi {{ user.first_name }}!</span> -->
+      <a class="link-item" v-on:click="showProjects">Projects</a>
+      <a class="link-item" v-on:click="showTasks">Tasks</a>
+      <a class="link-item" v-on:click="showProfile">Profile</a>
+      <a class="link-item logoutBtn" v-on:click="logout">Logout</a>
     </div>
   </section>
 </template>
@@ -17,52 +18,51 @@
 /* eslint-disable */
 export default {
   name: "HeaderComponent",
-  props: {
-    isLoggedIn: Boolean,
-  },
   data() {
     return {
       user: {},
     }
   },
-  watch: {
-    user: (newVal, oldVal) => {
-      console.log("User in Header.vue");
-      console.log("oldVal:", oldVal);
-      console.log("newVal:", newVal);
-    }
-  },
-  emits: {
-    showProfile: () => {
-      return true;
-    }
-  },
+  // watch: {
+    // user: (newVal, oldVal) => {
+    //   console.log('[Header.vue] User in Header.vue');
+    //   console.log('[Header.vue] oldVal:', oldVal);
+    //   console.log('[Header.vue] newVal:', newVal);
+    // }
+  // },
+  // emits: ['showHome', 'showProfile', 'showProjects', 'showTasks', 'logout'],
   created() {
-    if(this.isLoggedIn) {
-      const user = sessionStorage.getItem('user');
-      if(user) {
-        this.user = user;
-        console.log("User in SessionStorage:", user);
-      } else {
-        console.log('User is not stored properly in SessionStoarge');
-      }
-    }
+    // if(this.isLoggedIn) {
+    //   const user = sessionStorage.getItem('user');
+    //   if(user) {
+    //     this.user = user;
+    //     console.log('[Header.vue] User in SessionStorage:', user);
+    //   } else {
+    //     console.log('[Header.vue] User is not stored properly in SessionStoarge');
+    //   }
+    // }
   },
   methods: {
+    showHome() {
+      this.$router.push({ path: '/' });
+    },
     showProfile() {
-      this.$emit("showProfile");
+      this.$router.push({ path: '/profile' });
+    },
+    showProjects() {
+      this.$router.push({ path: '/projects' });
+    },
+    showTasks() {
+      this.$router.push({ path: '/tasks' });
     },
     logout() {
       if(sessionStorage.getItem('token')) {
-        sessionStorage.removeItem("token");
+        sessionStorage.removeItem('token');
       }
       if(sessionStorage.getItem('user')) {
-        sessionStorage.removeItem("user");
+        sessionStorage.removeItem('user');
       }
-      this.$router.push({ name: "login" });
-    },
-    getRouteLink(routeName) {
-      return this.$router.resolve({ name: routeName }).href;
+      this.$router.push({ path: '/login' });
     },
   },
 };
@@ -75,67 +75,41 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: honeydew;
+  padding: 25px 100px;
+  background-color: rgba(230, 255, 230, 0.6);
+  border-bottom: 1px solid rgba(78, 121, 78, 0.304);
 }
-#header .brand a {
+#header .brand {
   font-size: 2rem;
   line-height: 1;
-  font-weight: 600;
-  color: green;
-  padding: 12px 18px;
-  text-transform: uppercase;
+  font-weight: 400;
+  color: rgba(0, 128, 0, 0.858);
   text-decoration: none;
   cursor: pointer;
 }
 #header .brand span {
-  font-size: 2rem;
-  line-height: 1;
-  font-weight: 400;
-  color: green;
-  padding: 12px 18px;
-  padding-left: 0;
-  text-transform: capitalize;
-  text-decoration: none;
-  cursor: pointer;
+  font-weight: 600;
 }
-#header .nav-links-logout a {
+#header .nav-links .link-item {
   font-size: 1.1rem;
   line-height: 1.4;
-  padding: 12px 18px;
+  padding-right: 18px;
   margin-left: 10px;
-  border-radius: 6px;
   text-decoration: none;
   cursor: pointer;
+  color: rgb(0, 155, 0);
 }
-#header .nav-links-logout .loginBtn {
-  border: 1px solid green;
-  background-color: #fff;
-  color: green;
+#header .nav-links .link-item:hover {
+  color: rgb(0, 87, 0);
 }
-#header .nav-links-logout .signupBtn {
-  border: 1px solid green;
-  background-color: green;
+#header .nav-links .logoutBtn {
+  border: 1px solid rgba(0, 128, 0, 0.5);
+  background-color: rgb(34, 129, 34);
   color: #fff;
-}
-
-#header .nav-links-login a {
-  font-size: 1.1rem;
-  line-height: 1.4;
   padding: 12px 18px;
-  margin-left: 10px;
-  border-radius: 6px;
-  text-decoration: none;
-  cursor: pointer;
 }
-#header .nav-links-login .profileBtn {
-  border: 1px solid green;
-  background-color: #fff;
-  color: green;
-}
-#header .nav-links-login .logoutBtn {
-  border: 1px solid green;
-  background-color: green;
+#header .nav-links .logoutBtn:hover {
+  border: 1px solid rgba(0, 128, 0);
   color: #fff;
 }
 </style>

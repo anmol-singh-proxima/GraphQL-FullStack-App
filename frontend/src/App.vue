@@ -135,7 +135,6 @@ table {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: left;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -148,5 +147,6 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: #2c3e50;
+  text-align: left;
 }
 </style>

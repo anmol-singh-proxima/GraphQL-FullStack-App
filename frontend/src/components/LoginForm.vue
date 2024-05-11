@@ -4,7 +4,7 @@
     <div class="login">
       <span class="head">Login</span>
       <span class="validation-alert" v-if="validationAlert">{{validationAlert}}</span>
-      <span class="error" v-if="errorAlert">Error {{errorAlert.code}}: {{errorAlert.message}}</span>
+      <span class="error" v-if="errorAlert">{{errorAlert.message}}</span>
       <form @submit.prevent="login" class="login-form">
         <input type="email" placeholder="you@example.com" id="email" v-model="email" />
         <input type="password" placeholder="************" id="password" v-model="password" />
@@ -17,7 +17,6 @@
 <script>
 /* eslint-disable */
 import axios from 'axios';
-import {setAuthToken} from '@/api';
 
 export default {
   name: 'LoginPage',
@@ -67,6 +66,13 @@ export default {
         query: `
         mutation Mutation($input: LoginCtsUserInputType!) {
           loginUser(input: $input) {
+            user {
+              user_id
+              first_name
+              last_name
+              email
+              role_id
+            }
             token
           }
         }`,
@@ -78,44 +84,47 @@ export default {
     },
 
     async login() {
-      if (!this.formValidation()) {
-        return false;
-      }
-      this.getPayloadReady();
-
-      return await axios({
-        method: 'post',
-        url: 'http://localhost:4000/graphql',
-        responseType: 'json',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-type': 'application/json',
-        },
-        data: this.payload,
-      })
-      .then((response) => {
-        if(response.data.errors) {
+      if (this.formValidation()) {
+        this.getPayloadReady();
+        return await axios({
+          method: 'post',
+          url: 'http://localhost:4000/graphql',
+          responseType: 'json',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-type': 'application/json',
+          },
+          data: this.payload,
+        })
+        .then((response) => {
+          console.log("Response while Logging to the App:", JSON.stringify(response, null, 2));
+          if(response.data.errors) {
+            console.log("Error while Logging to the App:", response.data.errors);
+            this.errorAlert = {
+              code: response.status,
+              message: response.data.errors[0].message,
+            }
+            this.timeoutError();
+            return;
+          }
+          if(response.data.data.loginUser) {
+            const token = response.data.data.loginUser.token;
+            const user = response.data.data.loginUser.user;
+            if(token && user) {
+              sessionStorage.setItem('token', token);
+              sessionStorage.setItem('user', user);
+              this.$router.push({ path: '/' });
+            }
+          }
+        })
+        .catch((error) => {
+          console.log("Error from Server:", error);
           this.errorAlert = {
-            code: response.status,
-            message: response.data.errors[0].message,
+            message: error.message
           }
           this.timeoutError();
-          return;
-        }
-        console.log("Response:", JSON.stringify(response, null, 2));
-        /* Set the token and call the setAuthToken function */
-        const token = response.data.data.loginUser.token;
-        sessionStorage.setItem('token', token);
-        setAuthToken(token);
-        this.$router.push({ name: 'home' });
-      })
-      .catch((error) => {
-        console.log("Error from Server:", error);
-        this.errorAlert = {
-          message: error.message
-        }
-        this.timeoutError();
-      })
+        })
+      }
     },
   }
 }
