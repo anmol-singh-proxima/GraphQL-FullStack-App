@@ -1,4 +1,4 @@
-FrontEnd: Vuejs, vue-lds
+FrontEnd: Vuejs
 Server: Nodejs, Expressjs, Apollo-Server
 Middleware: Sequelize
 Database: Postgresql
@@ -75,7 +75,7 @@ Roles of each User:
 
 Advance Features:
 - Create an Admin User
-- Admin would be able to delete(logically) the users from the database
+- Admin would be able to delete (logically) the users from the database
 - Admin would be able to add a new user into the database
 
 
@@ -89,10 +89,10 @@ Database:
 TABLES & COLUMNS
 
 - cts_user table
-	- user_id primary-key string
+	- user_id string primary key unique not null
 	- first_name string
 	- last_name string
-	- email string
+	- email string unique
 	- password string
 	- role_id string
 	- created_dt date
@@ -101,17 +101,17 @@ TABLES & COLUMNS
 	- deleted_by string
 
 - cts_user_type table
-	- type_id primary-key string
+	- type_id string primary key unique not null
 	- type_name string
 
 - cts_user_role
-	- role_id primary-key string
+	- role_id string primary key unique not null
 	- role_name string
 	- role_level string
 	- type_id string
 
 - cts_project table
-	- project_id primary key string unique not null
+	- project_id string primary key unique not null
 	- release not null
 	- title not null
 	- description 
@@ -127,7 +127,7 @@ TABLES & COLUMNS
 	- deleted_by string
 
 - cts_assignment table
-	- assignment_id primary key int auto increment
+	- assignment_id int primary key auto increment unique not null
 	- user_id not null
 	- project_id not null
 	- assigned_dt
@@ -136,7 +136,7 @@ TABLES & COLUMNS
 	- removed_by (user_id)
 
 - cts_task table
-	- task_id primary key string unique not null
+	- task_id string primary key unique not null
 	- title not null
 	- description
 	- status [active, inactive]
@@ -156,6 +156,13 @@ TABLES & COLUMNS
 	- deleted_dt date
 	- deleted_by string
 
+- cts_authentication (Not Required)
+	- token string primary key unique not null
+	- user_id string not null
+	- status string not null
+	- created_dt date not null
+	- deleted_dt date 
+
 
 Relationship between Tables:
 - cts_user belongsToMany cts_project through cts_assignment
@@ -164,6 +171,7 @@ Relationship between Tables:
 - cts_project hasMany cts_task
 - cts_user hasMany cts_assignment (to fetch the cts_assignment compelete details)
 - cts_project hasMany cts_assignment (to fetch the cts_assignment compelete details)
+- cts_authentication must be isolated
 
 
 User_Types for User_Roles:
@@ -175,17 +183,36 @@ User_Roles:
 - Administrator, Project Manager, Project Lead, Designer, Developer, Tester, Validator, Support
 
 
-Extra Data needs to be add:
+Extra Data needs to be added:
 - cts_user - skills, 
-- Need to create a new table for the skills with categories
-- cts_project - design_deadline, development_deadline, testing_deadline, go_live_dt
+- cts_project - design_deadline, development_deadline, testing_deadline, go_live_date, 
+- cts_skills - Create a new table for the skills with categories
 
 
-Process of Communication between Client and Server:
+Process of Communication between Client and Server: 
 - User will login via email and password
-- Server will send a valid token
-- By using that token the user will fetch the user data
-- Server will send the User data by checking if the token is valid
+- Server will send a valid Token and save it in the database
+- Client will send request to the GraphQL APIs and Token must be sent along with each request
+- For each request Server will receive the Token and Verify if its valid or not
+- If the Token is verified then the Server will check the Authorizarion of the User
+- Based on the Authorizarion of the User, the Server will allow the operations for the API request
+
+
+Steps for Token Verification: 
+- At the time of Login, Server will generate the Token and store it in the Database along with the UserId and Status of the Token.
+- After that, whenever Client will send any API request, Server will check the Token in the request
+- If its there then only it will proceed further and Validate it by checking it in the Database
+
+Status of Token: 
+- Active - If the User is logged in with proper credentials
+- Expired - If the Token is expired based on the token's expire time
+- Deleted - If the User Logs out of the Application
+
+Things to remember about Token Authentication:
+- Token must always be unique (even in database)
+- There should always be a User associated with each Token
+- Token must always have a status
+- There should be exactly one Active Token associated with any User
 
 
 
@@ -214,3 +241,41 @@ Frontend:
 - Create a Home page with basic structure and with minimal data
 	- Profile of the User 
 	- All the Projects & Tasks
+
+
+
+
+=========================================================================================
+
+Phase 2:
+--------
+
+Started: 06/05/2024
+Completed: 
+
+Backend:
+- Add the following for the Logged in User:
+	- Validation of the User Credentials
+	- Proper Token Generation & Validation
+- Create a new table 'cts_authentication' in the database for the User Authentication using Token
+- Create Graphql Mutations for Create, Update and Delete of the Projects & Tasks
+- Add Data Validation for adding and updating the Projects & Tasks
+- Validate the Mutation reolvers for the User Role of the Logged-in User
+- Rename the files i.e. remove the 'cts' from all the file names
+
+FrontEnd:
+- Remove the Signup functionality i.e. Signup Page (User will be added by the Admin)
+- Make Changes in the Login Page:
+	- Remove the Header and Background
+	- Add the Company Logo on top of the Form
+	- Keep the Login Form in between the Page (i.e. A better UI for Login Form)
+- Add all the Types of Projects and Tasks in Menu Section
+- Create a Better UI for the list of Projects and Tasks
+- Display only the User-related Projects and Tasks (Not all of them)
+- Add the following functionalities as per the User Roles:
+	- User can Create, Update and Delete the Projects & Tasks
+	- User can Assign/Remove the Projects & Tasks to other User/s
+	- User can request to join/leave Projects & Tasks
+- Make the Profile Page better
+- Create a Store in Vue for handling the Data moving through the Application
+

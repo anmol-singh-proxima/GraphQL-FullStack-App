@@ -24,16 +24,16 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
             type: db.sequelize.QueryTypes.SELECT
         });
 
-        if(!instance) {
+        if (!instance) {
             throw new Error("[updateCtsUser]: Select instance failed");
         }
-        if(instance.length == 0) {
+        if (instance.length == 0) {
             throw new Error(`[updateCtsUser]: EmailId / UserId Not Found`);
         }
-        if(instance.length != 1) {
+        if (instance.length != 1) {
             throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance.length}`);
         }
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsUser]:', err);
         return err;
@@ -63,23 +63,23 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
 
         // Setting the required Update Data
         let updateData = fields.reduce((accumulator, field) => {
-            return {...accumulator, [field]: ''};
+            return { ...accumulator, [field]: '' };
         }, {});
         updateData = Object.assign(updateData, input);
 
         // Running the Update Query
         const instance = await db.cts_user.update(updateData, updateOptions);
-        if(!instance) {
+        if (!instance) {
             throw new Error("[updateCtsUser]: Sequelize update instance failed");
         }
-        if(instance[0] == 0) {
+        if (instance[0] == 0) {
             throw new Error(`[updateCtsUser]: Could not update the User data`);
         }
-        if(instance[1].length > 1) {
+        if (instance[1].length > 1) {
             throw new Error(`[updateCtsUser]: Expected 1 user, found ${instance[1].length}.`)
         }
         user = instance[1][0].dataValues;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsUser]:', err);
         return err;
@@ -87,7 +87,7 @@ const updateCtsUser = async (root: any, { input }: any, context: any, info: any)
 
     try {
         transaction ? await transaction.commit() : true;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsUser]:', err);
         return err;

@@ -3,8 +3,8 @@
   <section id="content">
     <div class="login">
       <span class="head">Login</span>
-      <span class="validation-alert" v-if="validationAlert">{{validationAlert}}</span>
-      <span class="error" v-if="errorAlert">{{errorAlert.message}}</span>
+      <span class="validation-alert" v-if="validationAlert">{{ validationAlert }}</span>
+      <span class="error" v-if="errorAlert">{{ errorAlert.message }}</span>
       <form @submit.prevent="login" class="login-form">
         <input type="email" placeholder="you@example.com" id="email" v-model="email" />
         <input type="password" placeholder="************" id="password" v-model="password" />
@@ -26,13 +26,13 @@ export default {
       password: '',
       errorAlert: null,
       validationAlert: null,
-      payload: null,
+      // payload: null,
     }
   },
   methods: {
-    getRouteLink(routeName) {
-      return this.$router.resolve({ name: routeName }).href;
-    },
+    // getRouteLink(routeName) {
+    //   return this.$router.resolve({ name: routeName }).href;
+    // },
 
     alertMessageDisplay(message, id) {
       this.validationAlert = message;
@@ -44,11 +44,11 @@ export default {
     },
 
     formValidation() {
-      if(this.email === '') {
+      if (this.email === '') {
         return this.alertMessageDisplay('Please enter the email', 'email');
-      } else if(!this.email.endsWith('@zcorp.com')) {
+      } else if (!this.email.endsWith('@zcorp.com')) {
         return this.alertMessageDisplay('Please enter the valid email', 'email');
-      } else if(this.password === '') {
+      } else if (this.password === '') {
         return this.alertMessageDisplay('Please enter the password', 'password');
       }
       return true;
@@ -57,73 +57,78 @@ export default {
     timeoutError() {
       document.getElementById('email').focus();
       setTimeout(() => {
-          this.errorAlert = null;
+        this.errorAlert = null;
       }, 3000);
     },
 
-    getPayloadReady() {
-      this.payload = {
-        query: `
-        mutation Mutation($input: LoginCtsUserInputType!) {
-          loginUser(input: $input) {
-            user {
-              user_id
-              first_name
-              last_name
-              email
-              role_id
-            }
-            token
-          }
-        }`,
-        variables: { input: {
-          email: this.email,
-          password: this.password,
-        }}
-      };
-    },
+    // getPayloadReady() {
+    //   this.payload = {
+    //     query: `
+    //     mutation Mutation($input: LoginCtsUserInputType!) {
+    //       loginUser(input: $input) {
+    //         user {
+    //           user_id
+    //           first_name
+    //           last_name
+    //           email
+    //           role_id
+    //         }
+    //         token
+    //       }
+    //     }`,
+    //     variables: {
+    //       input: {
+    //         email: this.email,
+    //         password: this.password,
+    //       }
+    //     }
+    //   };
+    // },
 
     async login() {
       if (this.formValidation()) {
-        this.getPayloadReady();
+        // this.getPayloadReady();
         return await axios({
           method: 'post',
-          url: 'http://localhost:4000/graphql',
+          url: 'http://localhost:4000/login',
           responseType: 'json',
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-type': 'application/json',
           },
-          data: this.payload,
+          data: {
+            email: this.email,
+            password: this.password,
+          },
         })
-        .then((response) => {
-          console.log("Response while Logging to the App:", JSON.stringify(response, null, 2));
-          if(response.data.errors) {
-            console.log("Error while Logging to the App:", response.data.errors);
+          .then((response) => {
+            console.log('[LoginForm.vue] Response while Logging to the App:', JSON.stringify(response, null, 2));
+            if (response.data.errors) {
+              console.log('[LoginForm.vue] Error while Logging to the App:', response.data.errors);
+              this.errorAlert = {
+                code: response.status,
+                message: response.data.errors[0].message,
+              }
+              this.timeoutError();
+              return;
+            }
+            if (response.status === 200 && (response.data && response.data.code === 'AUTHORIZED')) {
+              const token = response.data.token;
+              const user = response.data.user;
+              if (token && user) {
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('user', user);
+                this.$router.push({ path: '/' });
+              }
+            }
+          })
+          .catch((error) => {
+            console.log('[LoginForm.vue] Error from Server:', error);
             this.errorAlert = {
-              code: response.status,
-              message: response.data.errors[0].message,
+              message: error.message
             }
             this.timeoutError();
-            return;
-          }
-          if(response.data.data.loginUser) {
-            const token = response.data.data.loginUser.token;
-            const user = response.data.data.loginUser.user;
-            if(token && user) {
-              sessionStorage.setItem('token', token);
-              sessionStorage.setItem('user', user);
-              this.$router.push({ path: '/' });
-            }
-          }
-        })
-        .catch((error) => {
-          console.log("Error from Server:", error);
-          this.errorAlert = {
-            message: error.message
-          }
-          this.timeoutError();
-        })
+          })
       }
     },
   }
@@ -138,6 +143,7 @@ export default {
   padding: 20px;
   overflow-y: auto;
 }
+
 #content .login {
   display: block;
   width: 370px;
@@ -149,6 +155,7 @@ export default {
   border-radius: 2px;
   background-color: rgba(50, 60, 70, 0.5);
 }
+
 #content .login .head {
   display: block;
   width: 100%;
@@ -158,7 +165,9 @@ export default {
   padding: 10px 0;
   border-bottom: 1px solid #aaa;
 }
-#content .login .error, #content .login .validation-alert {
+
+#content .login .error,
+#content .login .validation-alert {
   display: block;
   width: 100%;
   font-size: 1rem;
@@ -170,24 +179,29 @@ export default {
   border-radius: 2px;
   margin-top: 10px;
 }
+
 #content .login .login-form {
-  color:rgb(0, 77, 0);
+  color: rgb(0, 77, 0);
 }
-#content .login .login-form input, #content .login .login-form button {
+
+#content .login .login-form input,
+#content .login .login-form button {
   display: block;
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
   padding: 10px 18px;
   margin: 15px 0;
-  color:rgb(0, 77, 0);
+  color: rgb(0, 77, 0);
   background-color: #eee;
   border: 1px solid green;
   border-radius: 6px;
 }
+
 #content .login .login-form input::after {
-  color:rgb(0, 77, 0);
+  color: rgb(0, 77, 0);
 }
+
 #content .login .login-form button {
   font-size: 1.1rem;
   color: #fff;

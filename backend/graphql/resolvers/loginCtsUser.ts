@@ -17,7 +17,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
     const { error, value } = loginDataValidation(input);
     console.log(`Response from Login Data Validation\nError: ${error}\nValue:${value}`);
 
-    if(error) {
+    if (error) {
         console.log('[loginCtsUser]: Validation Error: Please check the input.');
         throw new Error('Validation Error: Please check the inputs');
     }
@@ -36,15 +36,15 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
             }
         }, { transaction: transaction });
 
-        if(!instance) {
+        if (!instance) {
             console.log('[loginCtsUser]: Sequelize findAll instance failed');
             throw new Error('Internal Server Error');
         }
-        if(instance.length == 0) {
+        if (instance.length == 0) {
             console.log('[loginCtsUser]: EmailId / Password Not Found');
             throw new Error('Invalid EmailId / Password');
         }
-        if(instance.length != 1) {
+        if (instance.length != 1) {
             console.log(`[loginCtsUser]: Expected 1 user, found ${instance.length}.`);
             throw new Error(`Expected 1 user, found ${instance.length}.`);
         }
@@ -55,7 +55,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
         console.log("token:", token);
         console.log("[loginCtsUser]: User Logged in Successfully");
 
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[loginCtsUser]:', err);
         return err;
@@ -63,7 +63,7 @@ const loginCtsUser = async (root: any, { input }: any, context: any, info: any) 
 
     try {
         transaction ? await transaction.commit() : true;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[loginCtsUser]:', err);
         return err;

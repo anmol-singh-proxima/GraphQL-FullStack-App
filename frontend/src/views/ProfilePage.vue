@@ -48,7 +48,6 @@ export default {
       } else {
         console.log('[ProfilePage.vue] User not logged-In');
         this.$router.push({ path: '/login' });
-        return;
       }
     },
   }

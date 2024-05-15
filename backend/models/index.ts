@@ -12,6 +12,7 @@ let db: any = {};
 require('dotenv').config();
 
 import cts_assignment from './cts_assignment';
+import cts_authentication from './cts_authentication';
 import cts_project from './cts_project';
 import cts_task from './cts_task';
 import cts_user_role from './cts_user_role';
@@ -29,6 +30,7 @@ db = {
   sequelize,
   Sequelize,
   cts_assignment: cts_assignment(sequelize),
+  cts_authentication: cts_authentication(sequelize),
   cts_project: cts_project(sequelize),
   cts_task: cts_task(sequelize),
   cts_user_role: cts_user_role(sequelize),

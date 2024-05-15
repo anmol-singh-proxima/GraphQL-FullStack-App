@@ -14,20 +14,20 @@ export class cts_user_role extends Model {
   static CtsUserType: HasOne<cts_user_role, cts_user_type>;
 }
 
-export default function(sequelize: Sequelize) {
+export default function (sequelize: Sequelize) {
   cts_user_role.init(
     {
-      role_id: { 
+      role_id: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
         unique: true,
       },
-      role_name: { 
+      role_name: {
         type: DataTypes.STRING,
         allowNull: false,
-     },
-      type_id: { 
+      },
+      type_id: {
         type: DataTypes.STRING,
         references: {
           model: 'cts_user_type',
@@ -37,14 +37,14 @@ export default function(sequelize: Sequelize) {
         allowNull: false,
       },
     }, {
-      sequelize,
-      modelName: 'cts_user_role',
-      tableName: 'cts_user_role',
-      timestamps: false,
-    }
+    sequelize,
+    modelName: 'cts_user_role',
+    tableName: 'cts_user_role',
+    timestamps: false,
+  }
   )
 
-  cts_user_role.associate = function(models: any) {
+  cts_user_role.associate = function (models: any) {
     cts_user_role.CtsUserType = cts_user_role.hasOne(
       models.cts_user_type,
       { foreignKey: "type_id", sourceKey: "type_id" }

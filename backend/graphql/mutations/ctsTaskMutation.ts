@@ -13,29 +13,31 @@ import UpdateCtsTaskInputType from "../types/input/UpdateCtsTaskInputType";
 import insertCtsTask from '../resolvers/insertCtsTask';
 import updateCtsTask from '../resolvers/updateCtsTask';
 
-async function ctsTaskMutation() { return {
-    insertTask: {
-        type: new GraphQLNonNull(new GraphQLList(InsertCtsTaskReturnType)),
-        args: {
-            input: {
-                name: 'input',
-                description: 'insert a new user',
-                type: new GraphQLNonNull(new GraphQLList(InsertCtsTaskInputType))
-            }
+async function ctsTaskMutation() {
+    return {
+        insertTask: {
+            type: new GraphQLNonNull(new GraphQLList(InsertCtsTaskReturnType)),
+            args: {
+                input: {
+                    name: 'input',
+                    description: 'insert a new user',
+                    type: new GraphQLNonNull(new GraphQLList(InsertCtsTaskInputType))
+                }
+            },
+            resolve: insertCtsTask
         },
-        resolve: insertCtsTask
-    },
-    updateTask: {
-        type: new GraphQLNonNull(UpdateCtsTaskReturnType),
-        args: {
-            input: {
-                name: 'input',
-                description: 'update an existing user',
-                type: new GraphQLNonNull(UpdateCtsTaskInputType)
-            }
+        updateTask: {
+            type: new GraphQLNonNull(UpdateCtsTaskReturnType),
+            args: {
+                input: {
+                    name: 'input',
+                    description: 'update an existing user',
+                    type: new GraphQLNonNull(UpdateCtsTaskInputType)
+                }
+            },
+            resolve: updateCtsTask
         },
-        resolve: updateCtsTask
-    },
-}}
+    }
+}
 
 export { ctsTaskMutation };

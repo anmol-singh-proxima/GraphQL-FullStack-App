@@ -24,16 +24,16 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
             type: db.sequelize.QueryTypes.SELECT
         });
 
-        if(!instance) {
+        if (!instance) {
             throw new Error("[updateCtsTask]: Select instance failed");
         }
-        if(instance.length == 0) {
+        if (instance.length == 0) {
             throw new Error(`[updateCtsTask]: TaskId Not Found`);
         }
-        if(instance.length != 1) {
+        if (instance.length != 1) {
             throw new Error(`[updateCtsTask]: Expected 1 task, found ${instance.length}`);
         }
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsTask]:', err);
         return err;
@@ -61,18 +61,18 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
 
         // Running the Update Query
         const instance = await db.cts_task.update(updateData, updateOptions);
-        if(!instance) {
+        if (!instance) {
             throw new Error("[updateCtsTask]: Sequelize update instance failed");
         }
-        if(instance[0] == 0) {
+        if (instance[0] == 0) {
             throw new Error(`[updateCtsTask]: Could not update the Task data`);
         }
-        if(instance[1].length > 1) {
+        if (instance[1].length > 1) {
             throw new Error(`[updateCtsTask]: Expected 1 task, found ${instance[1].length}.`)
         }
         task = instance[1][0].dataValues;
 
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsTask]:', err);
         return err;
@@ -80,7 +80,7 @@ const updateCtsTask = async (root: any, { input }: any, context: any, info: any)
 
     try {
         transaction ? await transaction.commit() : true;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[updateCtsTask]:', err);
         return err;

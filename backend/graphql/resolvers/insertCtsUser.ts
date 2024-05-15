@@ -25,14 +25,14 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
             }
         }, { transaction: transaction });
 
-        if(!instance) {
+        if (!instance) {
             throw new Error("[insertCtsUser]: Sequelize findAll instance failed");
         }
-        if(instance.length > 0) {
+        if (instance.length > 0) {
             throw new Error(`[insertCtsUser]: User ${input.user_id} already exists`);
         }
 
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[insertCtsUser]:', err);
         return err;
@@ -62,12 +62,12 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
 
         // Running the Create Query
         const instance = await db.cts_user.create(createData, createOptions);
-        if(!instance) {
+        if (!instance) {
             throw new Error("[insertCtsUser]: Sequelize create instance failed");
         }
         user = instance.dataValues;
 
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[insertCtsUser]:', err);
         return err;
@@ -75,7 +75,7 @@ const insertCtsUser = async (root: any, { input }: any, context: any, info: any)
 
     try {
         transaction ? await transaction.commit() : true;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[insertCtsUser]:', err);
         return err;

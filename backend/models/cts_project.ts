@@ -10,13 +10,13 @@ import { cts_user } from './cts_user';
 import { cts_task } from './cts_task';
 
 export class cts_project extends Model {
-    public id!: string;
-    static associate: any;
-    static CtsUsers: BelongsToMany<cts_project, cts_user>;
-    static CtsTasks: HasMany<cts_user, cts_task>;
+  public id!: string;
+  static associate: any;
+  static CtsUsers: BelongsToMany<cts_project, cts_user>;
+  static CtsTasks: HasMany<cts_user, cts_task>;
 }
 
-export default function(sequelize: Sequelize) {
+export default function (sequelize: Sequelize) {
   cts_project.init({
     project_id: {
       type: DataTypes.STRING(6),
@@ -24,11 +24,11 @@ export default function(sequelize: Sequelize) {
       allowNull: false,
       unique: true,
     },
-    release: { 
+    release: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    title: { 
+    title: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -41,14 +41,14 @@ export default function(sequelize: Sequelize) {
     start_date: { type: DataTypes.DATEONLY },
     end_date: { type: DataTypes.DATEONLY },
 
-    created_dt: { 
-      type: DataTypes.DATE, 
-      allowNull: false, 
-      defaultValue: Sequelize.fn('NOW') 
+    created_dt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.fn('NOW')
     },
-    created_by: { 
-      type: DataTypes.STRING(6), 
-      allowNull: false 
+    created_by: {
+      type: DataTypes.STRING(6),
+      allowNull: false
     },
     deleted_dt: { type: DataTypes.DATE },
     deleted_by: { type: DataTypes.STRING(6) },
@@ -59,19 +59,19 @@ export default function(sequelize: Sequelize) {
     timestamps: false,
   });
 
-  cts_project.associate = function(models: any) {
+  cts_project.associate = function (models: any) {
     cts_project.CtsUsers = cts_project.belongsToMany(
-      models.cts_user, { 
-        through: 'cts_assignment', 
-        foreignKey: "project_id", 
-        otherKey: "user_id" 
-      }
+      models.cts_user, {
+      through: 'cts_assignment',
+      foreignKey: "project_id",
+      otherKey: "user_id"
+    }
     )
     cts_project.CtsTasks = cts_project.hasMany(
-      models.cts_task, { 
-        foreignKey: "project_id", 
-        sourceKey: "project_id" 
-      }
+      models.cts_task, {
+      foreignKey: "project_id",
+      sourceKey: "project_id"
+    }
     );
   }
 

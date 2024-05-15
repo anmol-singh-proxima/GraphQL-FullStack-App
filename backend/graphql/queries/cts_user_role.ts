@@ -17,11 +17,17 @@ async function ctsUserRole() {
             args: defaultListArgs(db.cts_user_role),
             resolve: resolver(db.cts_user_role, {
                 before: (findOptions: any, args: any, context: any) => {
-                    if(args.where) {
-                        findOptions.where = args.where;
+                    console.log('[cts_user_role.ts] findOptions:', findOptions);
+                    console.log('[cts_user_role.ts] context:', context);
+                    console.log('[cts_user_role.ts] args:', args);
+                    if (context.loggedIn === true && context.user) {
+                        if (args.where) {
+                            findOptions.where = args.where;
+                        }
+                        findOptions.order = [['role_id', 'ASC']];
+                        return findOptions;
                     }
-                    findOptions.order = [['role_id', 'ASC']];
-                    return findOptions;
+                    return null;
                 },
             })
         }

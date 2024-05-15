@@ -62,7 +62,6 @@ export default {
       } else {
         console.log('[ProjectPage.vue] User not logged-In');
         this.$router.push({ path: '/login' });
-        return;
       }
     },
     showAllProjects() {

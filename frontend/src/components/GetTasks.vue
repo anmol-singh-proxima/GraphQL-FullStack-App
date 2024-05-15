@@ -69,22 +69,24 @@ export default {
     data() {
         return {
             user: null,
+            payload: null,
             tasks: null,
         }
     },
     created() {
         const token = sessionStorage.getItem('token');
         const user = sessionStorage.getItem('user');
-        if(!token && !user) {
-            console.log("User not Logged In");
+        if (token && user) {
+            this.user = user;
+            this.getPayloadReady();
+            this.getUserData(token);
+        } else {
+            console.log('[GetTasks.vue] User not Logged In');
             this.$router.push({ path: '/login' });
         }
-        this.user = user;
-        this.getPayloadReady(token);
-        this.getUserData();
     },
     methods: {
-        getPayloadReady(token) {
+        getPayloadReady() {
             this.payload = {
                 query: `
                 query Query {
@@ -106,24 +108,40 @@ export default {
                 }`,
             };
         },
-        async getUserData() {
+
+        async getUserData(token) {
             return await axios({
                 method: 'post',
                 url: 'http://localhost:4000/graphql',
                 responseType: 'json',
                 headers: {
-                    'Access-Control-Aloww-Origin': '*',
+                    'Access-Control-Allow-Origin': '*',
                     'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 data: this.payload,
             })
-            .then((response) => {
-                console.log("Response in retrieving Tasks:", response);
-                this.tasks = response.data.data.cts_task;
-            })
-            .catch((error) => {
-                console.log("Error while retrieving Tasks:", error);
-            });
+                .then((response) => {
+                    console.log('[GetTasks.vue] response in retrieving tasks:', response);
+                    this.tasks = response.data.data.cts_task;
+                })
+                .catch((error) => {
+                    console.log('[GetTasks.vue] error.response:', error.response);
+                    if (error.response) {
+                        if (error.response.status === 401
+                            && error.response.statusText === 'Unauthorized'
+                            && error.response.data.code === 'UNAUTHORIZED') {
+                            if (sessionStorage.getItem('token')) {
+                                sessionStorage.removeItem('token');
+                            }
+                            if (sessionStorage.getItem('user')) {
+                                sessionStorage.removeItem('user');
+                            }
+                            console.log('[GetTasks.vue] User got Logged Out');
+                            this.$router.push({ path: '/login' });
+                        }
+                    }
+                });
         },
     }
 };
@@ -134,9 +152,11 @@ export default {
 #tasks {
     display: block;
 }
+
 .task-container {
     display: block;
 }
+
 .task-card {
     /* display: flex;
     flex-wrap: wrap; */
@@ -149,10 +169,12 @@ export default {
     /* height: 250px; */
     overflow-y: auto;
 }
+
 .task-card .key-value-pair {
     padding: 5px;
     display: block;
 }
+
 .task-card .property {
     display: inline-block;
     font-size: 1rem;
@@ -161,6 +183,7 @@ export default {
     font-weight: 600;
     width: 30%;
 }
+
 .task-card .value {
     display: inline-block;
     font-size: 1rem;

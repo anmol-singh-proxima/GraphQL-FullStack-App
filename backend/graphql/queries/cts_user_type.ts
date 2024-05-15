@@ -17,11 +17,17 @@ async function ctsUserType() {
             args: defaultListArgs(db.cts_user_type),
             resolve: resolver(db.cts_user_type, {
                 before: (findOptions: any, args: any, context: any) => {
-                    if(args.where) {
-                        findOptions.where = args.where;
+                    console.log('[cts_user_type.ts] findOptions:', findOptions);
+                    console.log('[cts_user_type.ts] context:', context);
+                    console.log('[cts_user_type.ts] args:', args);
+                    if (context.loggedIn === true && context.user) {
+                        if (args.where) {
+                            findOptions.where = args.where;
+                        }
+                        findOptions.order = [['type_id', 'ASC']];
+                        return findOptions;
                     }
-                    findOptions.order = [['type_id', 'ASC']];
-                    return findOptions;
+                    return null;
                 },
             })
         }

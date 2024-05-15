@@ -17,11 +17,17 @@ async function ctsAssignment() {
             args: defaultListArgs(db.cts_assignment),
             resolve: resolver(db.cts_assignment, {
                 before: (findOptions: any, args: any, context: any) => {
-                    if(args.where) {
-                        findOptions.where = args.where;
+                    console.log('[cts_assignment.ts] findOptions:', findOptions);
+                    console.log('[cts_assignment.ts] context:', context);
+                    console.log('[cts_assignment.ts] args:', args);
+                    if (context.loggedIn === true && context.user) {
+                        if (args.where) {
+                            findOptions.where = args.where;
+                        }
+                        findOptions.order = [['assignment_id', 'ASC']];
+                        return findOptions;
                     }
-                    findOptions.order = [['assignment_id', 'ASC']];
-                    return findOptions;
+                    return null;
                 },
             })
         }

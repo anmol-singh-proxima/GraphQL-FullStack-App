@@ -8,11 +8,11 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 export class cts_assignment extends Model {
-    public id!: string;
-    static associate: any;
+  public id!: string;
+  static associate: any;
 }
 
-export default function(sequelize: Sequelize) {
+export default function (sequelize: Sequelize) {
   cts_assignment.init({
     assignment_id: {
       type: DataTypes.INTEGER,
@@ -20,7 +20,7 @@ export default function(sequelize: Sequelize) {
       primaryKey: true,
       allowNull: false,
     },
-    user_id: { 
+    user_id: {
       type: DataTypes.STRING(6),
       allowNull: false,
       references: {
@@ -29,7 +29,7 @@ export default function(sequelize: Sequelize) {
       },
       field: 'user_id',
     },
-    project_id: { 
+    project_id: {
       type: DataTypes.STRING(6),
       allowNull: false,
       references: {
@@ -38,14 +38,14 @@ export default function(sequelize: Sequelize) {
       },
       field: 'project_id',
     },
-    assigned_dt: { 
-      type: DataTypes.DATE, 
-      allowNull: false, 
-      defaultValue: Sequelize.fn('NOW') 
+    assigned_dt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.fn('NOW')
     },
-    assigned_by: { 
-      type: DataTypes.STRING(6), 
-      allowNull: false 
+    assigned_by: {
+      type: DataTypes.STRING(6),
+      allowNull: false
     },
     removed_dt: { type: DataTypes.DATE },
     removed_by: { type: DataTypes.STRING(6) },

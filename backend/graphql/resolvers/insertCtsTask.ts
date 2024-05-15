@@ -51,7 +51,7 @@ const insertCtsTask = async (root: any, { input }: any, context: any, info: any)
 
         // Running the bulkCreate Query
         const instance = await db.cts_task.bulkCreate(createData, createOptions);
-        if(!instance) {
+        if (!instance) {
             throw new Error("[insertCtsTask]: Sequelize create instance failed");
         }
         // user = instance.dataValues;
@@ -61,7 +61,7 @@ const insertCtsTask = async (root: any, { input }: any, context: any, info: any)
         });
         console.log("[insertCtsTask]: tasks:", tasks);
 
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[insertCtsTask]:', err);
         return err;
@@ -69,7 +69,7 @@ const insertCtsTask = async (root: any, { input }: any, context: any, info: any)
 
     try {
         transaction ? await transaction.commit() : true;
-    } catch(err) {
+    } catch (err) {
         transaction ? await transaction.rollback() : true;
         console.error('[insertCtsTask]:', err);
         return err;

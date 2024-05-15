@@ -6,15 +6,15 @@
  */
 
 export const userTypes = [
-    { 
+    {
         type_id: 'ADMN',
         type_name: 'Administrator',
     },
-    { 
+    {
         type_id: 'LEAD',
         type_name: 'Leadership',
     },
-    { 
+    {
         type_id: 'STRD',
         type_name: 'Standard',
     },

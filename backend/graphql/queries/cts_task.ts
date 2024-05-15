@@ -17,11 +17,17 @@ async function ctsTask() {
             args: defaultListArgs(db.cts_task),
             resolve: resolver(db.cts_task, {
                 before: (findOptions: any, args: any, context: any) => {
-                    if(args.where) {
-                        findOptions.where = args.where;
+                    console.log('[cts_task.ts] findOptions:', findOptions);
+                    console.log('[cts_task.ts] context:', context);
+                    console.log('[cts_task.ts] args:', args);
+                    if (context.loggedIn === true && context.user) {
+                        if (args.where) {
+                            findOptions.where = args.where;
+                        }
+                        findOptions.order = [['task_id', 'ASC']];
+                        return findOptions;
                     }
-                    findOptions.order = [['task_id', 'ASC']];
-                    return findOptions;
+                    return null;
                 },
             })
         }

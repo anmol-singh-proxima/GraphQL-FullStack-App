@@ -15,7 +15,7 @@ export const users = [
         role_id: 'ADMN',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z01000',
         first_name: "Raksha",
         last_name: "Babu",
@@ -33,7 +33,7 @@ export const users = [
         role_id: 'PRLE',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z02001',
         first_name: "Puja",
         last_name: "Kumari",
@@ -42,7 +42,7 @@ export const users = [
         role_id: 'PRLE',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z02002',
         first_name: "Vannie",
         last_name: "Dogra",
@@ -60,7 +60,7 @@ export const users = [
         role_id: 'DESG',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z03001',
         first_name: "Surbhi",
         last_name: "Dalal",
@@ -69,7 +69,7 @@ export const users = [
         role_id: 'DVPR',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z03002',
         first_name: "Madhu",
         last_name: "Shree",
@@ -78,7 +78,7 @@ export const users = [
         role_id: 'DVPR',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z03003',
         first_name: "Shreya",
         last_name: "Bhatt",
@@ -87,7 +87,7 @@ export const users = [
         role_id: 'DVPR',
         created_by: 'Z00007',
     },
-    { 
+    {
         user_id: 'Z03004',
         first_name: "Nandhini",
         last_name: "Natrajan",

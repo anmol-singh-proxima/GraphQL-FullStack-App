@@ -17,13 +17,13 @@ import { userTypes } from '../seeders/UserTypeData';
 export const createAssignments = () => {
     assignments.map((assignment: Object) => {
         db.cts_assignment.create(assignment)
-        .then((response: any) => {
-            console.log('AssignmentData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("AssignmentData Create Error:", err);
-            console.log("AssignmentData:", assignment);
-        });
+            .then((response: any) => {
+                console.log('AssignmentData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("AssignmentData Create Error:", err);
+                console.log("AssignmentData:", assignment);
+            });
     })
 }
 
@@ -31,13 +31,13 @@ export const createAssignments = () => {
 export const createProjects = () => {
     projects.map(project => {
         db.cts_project.create(project)
-        .then((response: any) => {
-            console.log('ProjectData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("ProjectData Create Error:", err);
-            console.log("ProjectData:", project);
-        });
+            .then((response: any) => {
+                console.log('ProjectData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("ProjectData Create Error:", err);
+                console.log("ProjectData:", project);
+            });
     })
 }
 
@@ -45,13 +45,13 @@ export const createProjects = () => {
 export const createTasks = () => {
     tasks.map(task => {
         db.cts_task.create(task)
-        .then((response: any) => {
-            console.log('TaskData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("TaskData Create Error:", err);
-            console.log("TaskData:", task);
-        });
+            .then((response: any) => {
+                console.log('TaskData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("TaskData Create Error:", err);
+                console.log("TaskData:", task);
+            });
     })
 }
 
@@ -59,13 +59,13 @@ export const createTasks = () => {
 export const createUsers = () => {
     users.map(user => {
         db.cts_user.create(user)
-        .then((response: any) => {
-            console.log('UserData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("UserData Create Error:", err);
-            console.log("UserData:", user);
-        });
+            .then((response: any) => {
+                console.log('UserData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("UserData Create Error:", err);
+                console.log("UserData:", user);
+            });
     })
 }
 
@@ -73,13 +73,13 @@ export const createUsers = () => {
 export const createUserRoles = () => {
     userRoles.map(userRole => {
         db.cts_user_role.create(userRole)
-        .then((response: any) => {
-            console.log('UserRoleData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("UserRoleData Create Error:", err);
-            console.log("UserRoleData:", userRole);
-        });
+            .then((response: any) => {
+                console.log('UserRoleData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("UserRoleData Create Error:", err);
+                console.log("UserRoleData:", userRole);
+            });
     })
 }
 
@@ -87,12 +87,12 @@ export const createUserRoles = () => {
 export const createUserTypes = () => {
     userTypes.map(userType => {
         db.cts_user_type.create(userType)
-        .then((response: any) => {
-            console.log('UserTypeData Success Response:', response.toJSON());
-        })
-        .catch((err: any) => {
-            console.log("UserTypeData Create Error:", err);
-            console.log("UserTypeData:", userType);
-        });
+            .then((response: any) => {
+                console.log('UserTypeData Success Response:', response.toJSON());
+            })
+            .catch((err: any) => {
+                console.log("UserTypeData Create Error:", err);
+                console.log("UserTypeData:", userType);
+            });
     })
 }

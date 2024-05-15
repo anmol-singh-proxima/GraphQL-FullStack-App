@@ -61,22 +61,24 @@ export default {
     data() {
         return {
             user: null,
+            payload: null,
             projects: null,
         }
     },
     created() {
         const token = sessionStorage.getItem('token');
         const user = sessionStorage.getItem('user');
-        if(!token && !user) {
-            console.log("User not Logged In");
+        if (token && user) {
+            this.user = user;
+            this.getPayloadReady();
+            this.getUserData(token);
+        } else {
+            console.log('[GetProjects.vue] User not Logged In');
             this.$router.push({ path: '/login' });
         }
-        this.user = user;
-        this.getPayloadReady(token);
-        this.getUserData();
     },
     methods: {
-        getPayloadReady(token) {
+        getPayloadReady() {
             this.payload = {
                 query: `
                 query Query {
@@ -97,24 +99,39 @@ export default {
             };
         },
 
-        async getUserData() {
+        async getUserData(token) {
             return await axios({
                 method: 'post',
                 url: 'http://localhost:4000/graphql',
                 responseType: 'json',
                 headers: {
-                    'Access-Control-Aloww-Origin': '*',
+                    'Access-Control-Allow-Origin': '*',
                     'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 data: this.payload,
             })
-            .then((response) => {
-                console.log("Response in retrieving Projects:", response);
-                this.projects = response.data.data.cts_project;
-            })
-            .catch((error) => {
-                console.log("Error while retrieving Projects:", error);
-            });
+                .then((response) => {
+                    console.log('[GetProjects.vue] response in retrieving projects:', response);
+                    this.projects = response.data.data.cts_project;
+                })
+                .catch((error) => {
+                    console.log('[GetProjects.vue] error.response:', error.response);
+                    if (error.response) {
+                        if (error.response.status === 401
+                            && error.response.statusText === 'Unauthorized'
+                            && error.response.data.code === 'UNAUTHORIZED') {
+                            if (sessionStorage.getItem('token')) {
+                                sessionStorage.removeItem('token');
+                            }
+                            if (sessionStorage.getItem('user')) {
+                                sessionStorage.removeItem('user');
+                            }
+                            console.log('[GetProjects.vue] User got Logged Out');
+                            this.$router.push({ path: '/login' });
+                        }
+                    }
+                });
         },
     }
 };
@@ -125,6 +142,7 @@ export default {
 #projects {
     display: block;
 }
+
 .project-card {
     /* display: flex;
     flex-wrap: wrap; */
@@ -136,10 +154,12 @@ export default {
     /* height: 250px; */
     overflow-y: auto;
 }
+
 .project-card .key-value-pair {
     padding: 5px;
     display: block;
 }
+
 .project-card .property {
     display: inline-block;
     font-size: 1rem;
@@ -148,6 +168,7 @@ export default {
     font-weight: 600;
     width: 30%;
 }
+
 .project-card .value {
     display: inline-block;
     font-size: 1rem;

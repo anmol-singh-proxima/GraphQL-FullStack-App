@@ -16,40 +16,42 @@ import insertCtsUser from '../resolvers/insertCtsUser';
 import updateCtsUser from "../resolvers/updateCtsUser";
 import loginCtsUser from "../resolvers/loginCtsUser";
 
-async function ctsUserMutation() { return {
-    insertUser: {
-        type: InsertCtsUserReturnType,
-        args: {
-            input: {
-                name: 'input',
-                description: 'insert a new user',
-                type: new GraphQLNonNull(InsertCtsUserInputType)
-            }
+async function ctsUserMutation() {
+    return {
+        insertUser: {
+            type: InsertCtsUserReturnType,
+            args: {
+                input: {
+                    name: 'input',
+                    description: 'insert a new user',
+                    type: new GraphQLNonNull(InsertCtsUserInputType)
+                }
+            },
+            resolve: insertCtsUser
         },
-        resolve: insertCtsUser
-    },
-    updateUser: {
-        type: UpdateCtsUserReturnType,
-        args: {
-            input: {
-                name: 'input',
-                description: 'insert a new user',
-                type: new GraphQLNonNull(UpdateCtsUserInputType)
-            }
+        updateUser: {
+            type: UpdateCtsUserReturnType,
+            args: {
+                input: {
+                    name: 'input',
+                    description: 'insert a new user',
+                    type: new GraphQLNonNull(UpdateCtsUserInputType)
+                }
+            },
+            resolve: updateCtsUser
         },
-        resolve: updateCtsUser
-    },
-    loginUser: {
-        type: LoginCtsUserReturnType,
-        args: {
-            input: {
-                name: 'input',
-                description: 'login a user',
-                type: new GraphQLNonNull(LoginCtsUserInputType)
-            }
+        loginUser: {
+            type: LoginCtsUserReturnType,
+            args: {
+                input: {
+                    name: 'input',
+                    description: 'login a user',
+                    type: new GraphQLNonNull(LoginCtsUserInputType)
+                }
+            },
+            resolve: loginCtsUser
         },
-        resolve: loginCtsUser
-    },
-}}
+    }
+}
 
 export { ctsUserMutation };

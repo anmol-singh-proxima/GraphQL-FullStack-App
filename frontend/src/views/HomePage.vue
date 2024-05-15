@@ -11,6 +11,7 @@
 
 <script>
 /* eslint-disable */
+// import axios from 'axios';
 import HeaderComponent from '@/components/Header.vue';
 import FooterComponent from '@/components/Footer.vue';
 
@@ -23,6 +24,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      user: null,
     }
   },
   created() {
@@ -38,16 +40,15 @@ export default {
     checkIfLoggedIn() {
       const token = sessionStorage.getItem('token');
       const user = sessionStorage.getItem('user');
-      if(token && user) {
+      if (token && user) {
         console.log('[HomePage.vue] User is logged-In');
         this.isLoggedIn = true;
       } else {
         console.log('[HomePage.vue] User not logged-In');
         this.$router.push({ path: '/login' });
-        return;
       }
     },
-  }
+  },
 }
 </script>
 
@@ -57,6 +58,7 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 }
+
 #home .page-content {
   flex: 1;
   overflow-y: auto;

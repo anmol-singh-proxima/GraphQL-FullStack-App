@@ -27,7 +27,8 @@ const verifyToken = (token: String) => {
     const decoded = jwt.verify(token, secretKey);
     return decoded;
   } catch (error: any) {
-    console.error('Error verifying JWT:', error.message);
+    console.error('Error verifying JWT:', error);
+    // throw new Error(`Error verifying JWT: ${error.message}`);
     return null;
   }
 };
